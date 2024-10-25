@@ -2,8 +2,46 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/system/chat/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/system/chat/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/system/chat/build" />
+      <excludeFolder url="file://$MODULE_DIR$/system/utility/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/system/utility/build" />
+      <excludeFolder url="file://$MODULE_DIR$/system/utility/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/system/review/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/system/review/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/system/review/build" />
+      <excludeFolder url="file://$MODULE_DIR$/carvice/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/carvice/build" />
+      <excludeFolder url="file://$MODULE_DIR$/carvice/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/system/admin/build" />
+      <excludeFolder url="file://$MODULE_DIR$/system/admin/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/system/admin/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/system/product/build" />
+      <excludeFolder url="file://$MODULE_DIR$/system/product/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/system/product/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/system/registration/build" />
+      <excludeFolder url="file://$MODULE_DIR$/system/registration/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/system/registration/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/system/communication/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/system/communication/build" />
+      <excludeFolder url="file://$MODULE_DIR$/system/communication/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/system/purchase/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/system/purchase/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/system/purchase/build" />
+      <excludeFolder url="file://$MODULE_DIR$/system/news/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/system/news/build" />
+      <excludeFolder url="file://$MODULE_DIR$/system/news/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/system/media/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/system/media/build" />
+      <excludeFolder url="file://$MODULE_DIR$/system/media/.pub" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Dart SDK" level="project" />
   </component>
 </module>
