@@ -42,6 +42,15 @@
       <excludeFolder url="file://$MODULE_DIR$/system/uisystem/example/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/system/uisystem/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/system/uisystem/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/app/windows/flutter/ephemeral/.plugin_symlinks/local_auth_windows/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/app/windows/flutter/ephemeral/.plugin_symlinks/local_auth_windows/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/app/windows/flutter/ephemeral/.plugin_symlinks/local_auth_windows/build" />
+      <excludeFolder url="file://$MODULE_DIR$/app/windows/flutter/ephemeral/.plugin_symlinks/local_auth_windows/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/app/windows/flutter/ephemeral/.plugin_symlinks/local_auth_windows/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/app/windows/flutter/ephemeral/.plugin_symlinks/local_auth_windows/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/system/uisystem/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/system/uisystem/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/system/uisystem/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

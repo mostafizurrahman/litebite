@@ -87,13 +87,15 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: const SingleChildScrollView(
+      body:  SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
 
-            TapWidget(),
-            SizedBox(height: 24),
+            TapWidget(onTapWidget: (){
+              debugPrint('---tapped----');
+            },),
+            const SizedBox(height: 24),
           ],
         ),
       ),

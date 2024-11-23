@@ -94,25 +94,25 @@ class _LocalAuthState extends State<LocalAuthView> {
       final String title,
       ) {
     return Container(
-      decoration: CCAppTheme.shadowDec,
+      // decoration: CCAppTheme.shadowDec,
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(8)),
-        child: InkWidget(
-          content: Column(
-            children: [
-              const SizedBox(height: 24),
-              SvgPicture.asset(
-                asset,
-                width: 70,
-                height: 70,
-              ),
-              const SizedBox(height: 12),
-              Text(title),
-            ],
-          ),
-          onTap: () => _startBioMetric(type),
-          dimension: 140,
-        ),
+        // child: InkWidget(
+        //   content: Column(
+        //     children: [
+        //       const SizedBox(height: 24),
+        //       SvgPicture.asset(
+        //         asset,
+        //         width: 70,
+        //         height: 70,
+        //       ),
+        //       const SizedBox(height: 12),
+        //       Text(title),
+        //     ],
+        //   ),
+        //   onTap: () => _startBioMetric(type),
+        //   dimension: 140,
+        // ),
       ),
     );
   }

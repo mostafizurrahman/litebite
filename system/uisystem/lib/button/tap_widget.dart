@@ -30,7 +30,7 @@ class TapWidget extends StatelessWidget {
     this.tapAction,
     this.onTapWidget,
     this.title = 'Tap Me',
-    this.subtitle = 'Mostafizur Rahman',
+    this.subtitle = '',
     this.iconData,
     this.background = UIConstant.primary,
     this.borderColor,
@@ -60,29 +60,33 @@ class TapWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: _getBody(context),
-    );
+    return Container(
+        width: width,
+        height: height,
+        decoration: _getDecoration(),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(cornerRadius),
+      child: Material(
+        color: Colors.transparent,
+        child: _getBody(context),
+      ),
+    ),);
   }
 
   Widget _getBody(BuildContext context) {
 
-    return Container(
-      width: width,
-      height: height,
-      decoration: _getDecoration(),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(cornerRadius),
-        child: Ink(
-          color: Colors.redAccent,
-          child: InkWell(
-            onTap: _onTap,
+    return  Ink(
 
-            child: _getButtonContent(),
-          ),
+        color: background,
+        child: InkWell(
+          splashColor: Colors.amber,
+          focusColor: Colors.redAccent,
+
+          onTap: _onTap,
+
+          child: _getButtonContent(),
         ),
-      ),
-    );
+      );
   }
 
   Widget _getButtonContent() {
@@ -95,7 +99,7 @@ class TapWidget extends StatelessWidget {
       );
       if (subtitle.isNotEmpty) {
         final subtitleTxt = Text(
-          title,
+          subtitle,
           style: UIConstant.buttonSubtitleST,
         );
         final column = Column(
