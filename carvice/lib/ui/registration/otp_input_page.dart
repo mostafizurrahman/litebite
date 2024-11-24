@@ -1,5 +1,7 @@
 
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uisystem/button/tap_widget.dart';
@@ -18,6 +20,7 @@ class OTPInputPage extends StatefulWidget {
 
 class _OTPViewState extends State<OTPInputPage> {
 
+  final  _tapController = StreamController<bool>();
   @override
   Widget build(BuildContext context) {
     final typeStr = widget.type.value;
@@ -73,85 +76,111 @@ class _OTPViewState extends State<OTPInputPage> {
 
   KeyEventResult _handleKeyEvent(FocusNode node, KeyEvent event) {
 
-    final index = _focusNodes.indexWhere((node) => node.hasFocus);
-    final controller = _controllers[index];
-    if (event.logicalKey == LogicalKeyboardKey.backspace) {
-      controller.text = '';
-      if (index > 0) {
-        _focusNodes[index - 1].requestFocus();
-        _activeIndex = index - 1;
-      }
-    } else if ( event.character  != null && _isDigit(event)) {
-      controller.text = event.character ?? '';
-      if (index < 5) {
-        _focusNodes[index + 1].requestFocus();
-        _activeIndex = index + 1;
-      }
-    }
+    // final index = _focusNodes.indexWhere((node) => node.hasFocus);
+    // final controller = _controllers[index];
+    // if (event.logicalKey == LogicalKeyboardKey.backspace) {
+    //   controller.text = '';
+    //   if (index > 0) {
+    //     _focusNodes[index - 1].requestFocus();
+    //     _activeIndex = index - 1;
+    //   }
+    // } else if ( event.character  != null && _isDigit(event)) {
+    //   controller.text = event.character ?? '';
+    //   if (index < 5) {
+    //     _focusNodes[index + 1].requestFocus();
+    //     _activeIndex = index + 1;
+    //   }
+    // }
 
     return KeyEventResult.ignored;
   }
 
   Widget getOTPWidget(BuildContext context) {
     return
-      // Focus(
-      //
-      // onKeyEvent: _handleKeyEvent,
-      // child:
+
       Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(6, (index) {
-                return SizedBox(
-                  width: 48,
-                  child: TextField(
-                    controller: _controllers[index],
-                    focusNode: _focusNodes[index],
-                    maxLength: 1,
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 22, color: Colors.redAccent),
-                    decoration: InputDecoration(
-                      counterText: '', // Hides the character counter
-                      border: OutlineInputBorder(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(6, (index) {
+                  return SizedBox(
+                    width: 48,
+                    child: TextField(
+                      controller: _controllers[index],
+                      focusNode: _focusNodes[index],
+                      maxLength: 1,
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 22, color: Colors.redAccent),
+                      decoration: InputDecoration(
+                        counterText: '', // Hides the character counter
+                        border: OutlineInputBorder(),
 
+                      ),
+                      onChanged: (text) => _onChanged(index: index, text: text),
                     ),
-                    onChanged: (text) => _onChanged(index: index, text: text),
-                  ),
-                );
-              }),
+                  );
+                }),
+              ),
             ),
             SizedBox(height: 24),
-            TapWidget(
-              title: 'Submit OTP',
-              onTapWidget: () {
-                final otp = _controllers.map((c) => c.text).join();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("Entered OTP: $otp")),
-                );
-              },
+            StreamBuilder<bool>(
+              initialData: false,
+              stream: _tapController.stream,
+              builder: _buildTapWidget,
             ),
           ],
         ),
-      // ),
+    );
+  }
+
+  Widget _buildTapWidget(context, AsyncSnapshot<bool> snapshot) {
+    return TapWidget(
+      width: MediaQuery.of(context).size.width - 48,
+      title: 'Submit OTP',
+      onTapWidget: _hasText,
+      isEnabled: snapshot.data ?? false,
+    );
+  }
+
+
+  void _hasText() {
+    final otp = _controllers.map((c) => c.text).join();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Entered OTP: $otp")),
     );
   }
 
   void _onChanged({required String text, required int index}) {
+    final otp = _controllers.map((c) => c.text).join();
+    if (otp.length == 6) {
+      _tapController.sink.add(true);
+    } else if (otp.length == 5) {
+      _tapController.sink.add(false);
+    }
     if (text.isEmpty) {
       _controllers[index].clear();
       if (index > 0) {
         _focusNodes[index - 1].requestFocus();
+        _controllers[index - 1].selection = TextSelection(
+          baseOffset: 0,
+          extentOffset: _controllers[index - 1].text.length,
+        );
         _activeIndex = index - 1;
       }
     } else {
       if (index < 5) {
         _focusNodes[index + 1].requestFocus();
         _activeIndex = index + 1;
+        _controllers[index + 1].selection = TextSelection(
+          baseOffset: 0,
+          extentOffset: _controllers[index - 1].text.length,
+        );
       }
     }
   }

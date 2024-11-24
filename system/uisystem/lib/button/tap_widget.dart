@@ -22,7 +22,7 @@ class TapWidget extends StatelessWidget {
   final double borderWidth;
   final double cornerRadius;
   final TapAction? tapAction;
-
+  final bool isEnabled;
   final VoidCallback? onTapWidget;
 
   const TapWidget({
@@ -42,6 +42,7 @@ class TapWidget extends StatelessWidget {
     this.width = 200,
     this.cornerRadius = 5,
     this.shadowColor = UIConstant.shadowCL,
+    this.isEnabled = true,
     this.tapData,
   });
 
@@ -77,12 +78,12 @@ class TapWidget extends StatelessWidget {
 
     return  Ink(
 
-        color: background,
+        color: isEnabled ?  background: Colors.grey,
         child: InkWell(
           splashColor: Colors.amber,
-          focusColor: Colors.redAccent,
+          focusColor:  Colors.redAccent ,
 
-          onTap: _onTap,
+          onTap: isEnabled ? _onTap : null,
 
           child: _getButtonContent(),
         ),

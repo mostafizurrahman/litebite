@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:carvice/ui/registration/email_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:uisystem/button/tap_widget.dart';
 import 'package:uisystem/theme/constants.dart';
 
@@ -21,12 +22,12 @@ class MobileRegistrationPage extends StatefulWidget {
 
 class _MobileRegistrationState extends State<MobileRegistrationPage> {
 
-  final StreamController<RegActionType?> regTapController = StreamController();
+  final BehaviorSubject<RegActionType?> _regController = BehaviorSubject();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       initialData: null,
-      stream: regTapController.stream,
+      stream: _regController.stream,
       builder: _getPageView,
     );
   }
@@ -40,7 +41,7 @@ class _MobileRegistrationState extends State<MobileRegistrationPage> {
         IconButton(
           icon: const Icon(Icons.settings_power),
           onPressed: () {
-            regTapController.sink.add(null);
+            _regController.sink.add(null);
           },
         ),
       ],
@@ -49,14 +50,29 @@ class _MobileRegistrationState extends State<MobileRegistrationPage> {
 
   Widget _getPageView(BuildContext ctx, AsyncSnapshot<RegActionType?> data) {
 
-    return Scaffold(
-      appBar: data.data == null ? null : _getBackButton(data.data!),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: _getContent(data.data),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: _shouldPop,
+      child: Scaffold(
+        appBar: data.data == null ? null : _getBackButton(data.data!),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: _getContent(data.data),
+          ),
         ),
       ),
     );
+  }
+
+  void _shouldPop(bool didPop, Object? data) {
+
+    final type = _regController.valueOrNull;
+    if (type == null) {
+      Navigator.of(context, rootNavigator: true).pop();
+    } else {
+      _regController.sink.add(null);
+    }
+
   }
 
   Widget _getContent(RegActionType? type) {
@@ -67,7 +83,7 @@ class _MobileRegistrationState extends State<MobileRegistrationPage> {
       return MobileView();
     }
     return RegistrationSelectionView(
-      regTapController: regTapController,
+      regTapController: _regController,
     );
 
   }

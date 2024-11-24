@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:uisystem/theme/constants.dart';
 import 'package:uisystem/uisystem.dart';
 
 import 'otp_input_page.dart';
@@ -30,7 +31,7 @@ class _EmailState extends State<EmailView> {
         TextField(
           controller: _controller,
           decoration: InputDecoration(
-            hintText: 'Enter you email',
+            hintText: 'Enter you email',hintStyle: UIConstant.hintStyle
           ),
         ),
         SizedBox(height: 8,),
@@ -42,7 +43,7 @@ class _EmailState extends State<EmailView> {
   void _requestOTP() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => OTPInputPage(type: RegActionType.mobile)),
+      MaterialPageRoute(builder: (context) => OTPInputPage(type: RegActionType.email)),
     );
   }
 }

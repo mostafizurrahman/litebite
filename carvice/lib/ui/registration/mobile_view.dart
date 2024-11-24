@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:uisystem/button/tap_widget.dart';
+import 'package:uisystem/theme/constants.dart';
 
 import 'otp_input_page.dart';
 import 'registration_selection_view.dart';
@@ -22,14 +23,15 @@ class _MobileState extends State<MobileView> {
     return Column(
       children: [
 
-        Text('Sign in with Email'),
+        Text('Sign in with Mobile'),
         SizedBox(height: 8,),
-        Text('An 6-digit code will be sent to this email account'),
+        Text('An 6-digit code will be sent to this Mobile Number'),
         SizedBox(height: 8,),
         TextField(
           controller: _controller,
           decoration: InputDecoration(
-            hintText: 'Enter you email',
+            hintText: 'Enter you Mobile Number',
+            hintStyle: UIConstant.hintStyle
           ),
         ),
         SizedBox(height: 8,),

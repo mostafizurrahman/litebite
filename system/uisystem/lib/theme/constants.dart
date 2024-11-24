@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 //cars
 class UIConstant  {
+  static const double smallFS = 13;
   static const double regularFS = 14;
   static const double mediumFS = 16;
   static const double largeFS = 18;
@@ -20,6 +21,11 @@ class UIConstant  {
   static const buttonTitleST = TextStyle(
     fontSize: UIConstant.buttonFS,
     color: UIConstant.buttonTxt,
+  );
+
+  static const hintStyle = TextStyle(
+    fontSize: UIConstant.smallFS,
+    color: UIConstant.shadowCL,
   );
 
   static const buttonSubtitleST = TextStyle(
