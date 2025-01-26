@@ -24,7 +24,7 @@ class TapWidget extends StatelessWidget {
   final TapAction? tapAction;
   final bool isEnabled;
   final VoidCallback? onTapWidget;
-
+  final Widget? child;
   const TapWidget({
     super.key,
     this.tapAction,
@@ -44,6 +44,7 @@ class TapWidget extends StatelessWidget {
     this.shadowColor = UIConstant.shadowCL,
     this.isEnabled = true,
     this.tapData,
+    this.child,
   });
 
   bool get _hasBorder => borderWidth > 0;
@@ -76,6 +77,9 @@ class TapWidget extends StatelessWidget {
 
   Widget _getBody(BuildContext context) {
 
+    if (child != null) {
+      return Center(child: child!);
+    }
     return  Ink(
 
         color: isEnabled ?  background: Colors.grey,
