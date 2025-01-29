@@ -29,7 +29,8 @@ class LocationResponse extends BaseResponse<Location>{
 
   @override
   Location toEntity() {
-    // TODO: implement toEntity
-    throw UnimplementedError();
+    return Location(
+
+    );
   }
 }
