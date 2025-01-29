@@ -1,6 +1,7 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../domain/entity.dart';
 import '../../domain/entity/localized_text.dart';
 
 // add the single generated code file produced by json_serializer
@@ -8,7 +9,11 @@ import '../../domain/entity/localized_text.dart';
 part 'models.g.dart';
 part 'base_response.dart';
 part 'localized_response.dart';
-
+part 'menu_response.dart';
+part 'price_response.dart';
+part 'restaurant_response.dart';
+part 'review_response.dart';
+part 'location_response.dart';
 
 //entity conversions
 List<T> _toEntityList<T>(final List<BaseResponse<T>> list) {
