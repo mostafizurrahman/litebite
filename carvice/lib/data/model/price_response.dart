@@ -3,9 +3,11 @@ part of 'models.dart';
 
 @JsonSerializable(createToJson: false)
 class PriceResponse extends BaseResponse<Price>{
+  @JsonKey(defaultValue: 0)
   final num full;
+  @JsonKey(defaultValue: 0)
   final num half;
-  @JsonKey(name: 'one_three')
+  @JsonKey(name: 'one_three', defaultValue: 0)
   final num oneTo3;
 
   PriceResponse({
@@ -17,7 +19,6 @@ class PriceResponse extends BaseResponse<Price>{
 
   @override
   Price toEntity() {
-    // TODO: implement toEntity
-    throw UnimplementedError();
+    return Price(full: full, half: half, oneTo3: oneTo3);
   }
 }

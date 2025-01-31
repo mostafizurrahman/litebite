@@ -1,9 +1,7 @@
-
-
-
 part of 'models.dart';
+
 @JsonSerializable(createToJson: false)
-class TimingResponse extends BaseResponse<Timing>{
+class TimingResponse extends BaseResponse<Timing> {
   final String openTime;
   final String closeTime;
 
@@ -12,16 +10,17 @@ class TimingResponse extends BaseResponse<Timing>{
     required this.openTime,
   });
 
-  factory TimingResponse.fromJson(Map<String, dynamic> json) => _$TimingResponseFromJson(json);
+  factory TimingResponse.fromJson(Map<String, dynamic> json) =>
+      _$TimingResponseFromJson(json);
 
   @override
   Timing toEntity() {
-    // TODO: implement toEntity
-    throw UnimplementedError();
+    return Timing(closeTime: closeTime, openTime: openTime);
   }
 }
+
 @JsonSerializable(createToJson: false)
-class RestaurantResponse extends BaseResponse<Restaurant>{
+class RestaurantResponse extends BaseResponse<Restaurant> {
   @JsonKey(name: 'cover_image')
   final String? coverImage;
   @JsonKey(name: 'profile_image')
@@ -39,6 +38,7 @@ class RestaurantResponse extends BaseResponse<Restaurant>{
   final List<ReviewResponse> reviews;
   final List<String> waiters;
   final TimingResponse timing;
+
   RestaurantResponse({
     required this.coverImage,
     required this.profileImage,
@@ -53,11 +53,25 @@ class RestaurantResponse extends BaseResponse<Restaurant>{
     required this.waiters,
     required this.timing,
   });
-  factory RestaurantResponse.fromJson(Map<String, dynamic> json) => _$RestaurantResponseFromJson(json);
+
+  factory RestaurantResponse.fromJson(Map<String, dynamic> json) =>
+      _$RestaurantResponseFromJson(json);
 
   @override
   Restaurant toEntity() {
-    // TODO: implement toEntity
-    throw UnimplementedError();
+    return Restaurant(
+      coverImage: coverImage ?? '',
+      profileImage: profileImage ?? '',
+      description: _toEntity(description),
+      history: history?.toEntity(),
+      menu: _toEntityList(menuList),
+      name: _toEntity(name),
+      email: email,
+      restaurantID: restaurantID,
+      phoneNumber: phoneNumber,
+      reviews: _toEntityList(reviews),
+      waiters: waiters,
+      timing: _toEntity(timing),
+    );
   }
 }

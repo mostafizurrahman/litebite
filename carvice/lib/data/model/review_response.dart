@@ -4,7 +4,7 @@ part of 'models.dart';
 
 
 @JsonSerializable(createToJson: false)
-class ReviewResponse {
+class ReviewResponse extends BaseResponse<Review> {
   final num index;
   @JsonKey(name:'menu_id')
   final String menuID;
@@ -28,4 +28,17 @@ class ReviewResponse {
     required this.reviewType,
   });
   factory ReviewResponse.fromJson(Map<String, dynamic> json) => _$ReviewResponseFromJson(json);
+
+  @override
+  Review toEntity() {
+    return Review(
+      index: index,
+      menuID: menuID,
+      profileImage: profileImage,
+      rating: rating,
+      review: review,
+      reviewOrder: reviewOrder,
+      reviewType: reviewType,
+    );
+  }
 }

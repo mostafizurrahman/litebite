@@ -31,9 +31,9 @@ MenuResponse _$MenuResponseFromJson(Map<String, dynamic> json) => MenuResponse(
 
 PriceResponse _$PriceResponseFromJson(Map<String, dynamic> json) =>
     PriceResponse(
-      full: json['full'] as num,
-      half: json['half'] as num,
-      oneTo3: json['one_three'] as num,
+      full: json['full'] as num? ?? 0,
+      half: json['half'] as num? ?? 0,
+      oneTo3: json['one_three'] as num? ?? 0,
     );
 
 TimingResponse _$TimingResponseFromJson(Map<String, dynamic> json) =>

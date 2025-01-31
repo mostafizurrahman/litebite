@@ -30,7 +30,15 @@ class LocationResponse extends BaseResponse<Location>{
   @override
   Location toEntity() {
     return Location(
-
+      area: area ?? '',
+      block: block ?? '',
+      city: city ?? '',
+      code: code ?? '',
+      country: country ?? '',
+      district: district ?? '',
+      googleMap: googleMap ?? '',
+      house: house ?? '',
+      road: road ?? '',
     );
   }
 }

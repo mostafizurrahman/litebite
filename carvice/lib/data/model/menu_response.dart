@@ -36,7 +36,16 @@ class MenuResponse extends BaseResponse<Menu> {
 
   @override
   Menu toEntity() {
-    // TODO: implement toEntity
-    throw UnimplementedError();
+    return Menu(
+      coverImage: coverImage,
+      profileImage: profileImage,
+      foodImages: foodImages,
+      menuID: id,
+      ownerID: ownerID,
+      price: price.toEntity(),
+      reviewList: reviewList,
+      foodType: foodType,
+      isPopular: isPopular,
+    );
   }
 }
