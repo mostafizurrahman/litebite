@@ -4,3 +4,7 @@ export 'entity/menu.dart';
 export 'entity/price.dart';
 export 'entity/restaurant.dart';
 export 'entity/review.dart';
+export 'entity/order.dart';
+export 'entity/menu_table.dart';
+export 'entity/order_menu.dart';
+export 'entity/order_info.dart';

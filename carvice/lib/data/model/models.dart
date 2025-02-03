@@ -1,8 +1,8 @@
 
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../domain/entity.dart';
-import '../../domain/entity/localized_text.dart';
 
 // add the single generated code file produced by json_serializer
 // applied to all the modules
@@ -14,6 +14,8 @@ part 'price_response.dart';
 part 'restaurant_response.dart';
 part 'review_response.dart';
 part 'location_response.dart';
+part 'table_response.dart';
+part 'order_response.dart';
 
 //entity conversions
 List<T> _toEntityList<T>(final List<BaseResponse<T>> list) {
