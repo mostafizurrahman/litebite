@@ -12,7 +12,20 @@
           "package_name": "com.carvicebd.carvice"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "461962592611-4ipi3c6as2v9nabs29h79076oq3qd1pu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.carvicebd.carvice",
+            "certificate_hash": "ffba88abd5130f1622c8578a99cf3205171822ac"
+          }
+        },
+        {
+          "client_id": "461962592611-tsc2nrdu7vaif9j0uvnlgvn2pg87a1i8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAC-FevzXCv8gR9z-Ipsh9flMRtj3Qltco"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "461962592611-tsc2nrdu7vaif9j0uvnlgvn2pg87a1i8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "461962592611-8v9s9enf3erhnlh5p19dusojs36krhn6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.carvicebd.carvice.ios"
+              }
+            }
+          ]
         }
       }
     }

@@ -93,8 +93,8 @@ class _LandingState extends State<LandingPage> {
     debugPrint('google sign in');
     final googleSignIn = GoogleSignIn(
       scopes: [
-        'email', // Default scope (Gets email)
-        'profile', // Default scope (Gets name, profile pic)
+        'email',
+        'profile'
       ],
     );
 
@@ -102,12 +102,11 @@ class _LandingState extends State<LandingPage> {
       final GoogleSignInAccount? user = await googleSignIn.signIn();
       if (user == null) {
         print("User canceled sign-in");
-        return;
+      } else {
+        print("User Name: ${user.displayName}");
+        print("User Email: ${user.email}");
+        print("Profile Picture: ${user.photoUrl}");
       }
-
-      print("User Name: ${user.displayName}");
-      print("User Email: ${user.email}");
-      print("Profile Picture: ${user.photoUrl}");
     } catch (error) {
       print("Google Sign-In Error: $error");
     }
