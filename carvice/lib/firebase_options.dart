@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:461962592611:android:084e0c2df59d4ca9825356',
     messagingSenderId: '461962592611',
     projectId: 'car-service-e7f4c',
-    storageBucket: 'car-service-e7f4c.appspot.com',
+    storageBucket: 'car-service-e7f4c.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -62,7 +62,7 @@ class DefaultFirebaseOptions {
     appId: '1:461962592611:ios:a5c61dce71a95541825356',
     messagingSenderId: '461962592611',
     projectId: 'car-service-e7f4c',
-    storageBucket: 'car-service-e7f4c.appspot.com',
+    storageBucket: 'car-service-e7f4c.firebasestorage.app',
     iosBundleId: 'com.carvicebd.carvice',
   );
 }

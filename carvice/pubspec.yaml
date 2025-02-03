@@ -40,6 +40,7 @@ dependencies:
   shared_preferences: ^2.4.0
   rxdart: any
   flutter_svg: ^2.0.17
+  google_sign_in: ^6.2.2
   uisystem:
     path: ../system/uisystem
 dev_dependencies:

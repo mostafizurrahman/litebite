@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "461962592611",
     "project_id": "car-service-e7f4c",
-    "storage_bucket": "car-service-e7f4c.appspot.com"
+    "storage_bucket": "car-service-e7f4c.firebasestorage.app"
   },
   "client": [
     {
