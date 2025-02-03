@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:uisystem/theme/constants.dart';
 
@@ -25,6 +22,7 @@ class TapWidget extends StatelessWidget {
   final bool isEnabled;
   final VoidCallback? onTapWidget;
   final Widget? child;
+
   const TapWidget({
     super.key,
     this.tapAction,
@@ -59,39 +57,35 @@ class TapWidget extends StatelessWidget {
 
   bool get _hasTapData => tapData != null && tapAction != null;
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: width,
-        height: height,
-        decoration: _getDecoration(),
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(cornerRadius),
-      child: Material(
-        color: Colors.transparent,
-        child: _getBody(context),
+      width: width,
+      height: height,
+      decoration: _getDecoration(),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(cornerRadius),
+        child: Material(
+          color: Colors.transparent,
+          child: _getBody(context),
+        ),
       ),
-    ),);
+    );
   }
 
   Widget _getBody(BuildContext context) {
-
     if (child != null) {
       return Center(child: child!);
     }
-    return  Ink(
-
-        color: isEnabled ?  background: Colors.grey,
-        child: InkWell(
-          splashColor: Colors.amber,
-          focusColor:  Colors.redAccent ,
-
-          onTap: isEnabled ? _onTap : null,
-
-          child: _getButtonContent(),
-        ),
-      );
+    return Ink(
+      color: isEnabled ? background : Colors.grey,
+      child: InkWell(
+        splashColor: Colors.amber,
+        focusColor: Colors.redAccent,
+        onTap: isEnabled ? _onTap : null,
+        child: _getButtonContent(),
+      ),
+    );
   }
 
   Widget _getButtonContent() {
@@ -110,14 +104,16 @@ class TapWidget extends StatelessWidget {
         final column = Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            titleTxt,
+            _getTitleView(titleTxt),
             // SizedBox(height: height * 0.1),
             subtitleTxt,
           ],
         );
         widgets.add(column);
       } else {
-        widgets.add(titleTxt);
+        widgets.add(
+          _getTitleView(titleTxt),
+        );
       }
     }
 
@@ -128,17 +124,34 @@ class TapWidget extends StatelessWidget {
     );
   }
 
+  Widget _getTitleView(Text titleTxt) {
+    if (_multipleContent)
+      return Row(
+        children: [
+          Icon(
+            iconData!,
+            color: iconColor ?? Colors.white,
+            size: 24,
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+          titleTxt
+        ],
+      );
+    return titleTxt;
+  }
+
   BoxDecoration _getDecoration() {
     return BoxDecoration(
       color: Colors.transparent,
       borderRadius: BorderRadius.circular(cornerRadius * 2),
-      boxShadow:  _getShadow(),
+      boxShadow: _getShadow(),
     );
   }
 
-  List<BoxShadow> ? _getShadow() {
+  List<BoxShadow>? _getShadow() {
     if (shadowColor != null) {
-
       return [
         BoxShadow(
           color: shadowColor!,
@@ -148,7 +161,6 @@ class TapWidget extends StatelessWidget {
     }
     return null;
   }
-
 
   void _onTap() {
     if (_hasTapData) {

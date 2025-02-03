@@ -28,6 +28,11 @@ class Localization {
     final pref = await SharedPreferences.getInstance();
     return pref.getString(Constants.lanKey) ?? Constants.en;
   }
+
+  String getText({required String key}) {
+    return _languageMap[language]?[key] ?? "**$key*** not found";
+  }
+
 }
 
 final localization = Localization();

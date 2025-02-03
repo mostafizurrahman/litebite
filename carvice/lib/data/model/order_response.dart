@@ -34,26 +34,33 @@ class OrderResponse extends BaseResponse<Order> {
   @JsonKey(name: 'order_id')
   final String orderID;
   @JsonKey(name: 'table_list')
-  final String tableList;
+  final List<String> tableList;
   @JsonKey(name: 'order_status')
   final String orderStatus;
   @JsonKey(name: 'user_list')
   final List<String> userList;
   @JsonKey(name: 'menu_list')
   final List<OrderMenuResponse> menuList;
-  final String userID;
+
   final List<String> waiters;
   @JsonKey(name: 'order_time')
   final String orderTime;
 
   @override
   Order toEntity() {
-    return Order();
+    return Order(
+      orderID: orderID,
+      menuList: _toEntityList(menuList),
+      orderStatus: orderStatus,
+      orderTime: orderTime,
+      tableList: tableList,
+      userList: userList,
+      waiters: waiters,
+    );
   }
 
   OrderResponse({
     required this.orderID,
-    required this.userID,
     required this.waiters,
     required this.orderTime,
     required this.menuList,
@@ -64,7 +71,7 @@ class OrderResponse extends BaseResponse<Order> {
 }
 
 @JsonSerializable(createToJson: false)
-class OrderInfoResponse extends BaseResponse<Order> {
+class OrderInfoResponse extends BaseResponse<OrderInfo> {
   @JsonKey(name: 'order_image')
   final String orderImage;
   @JsonKey(name: 'manager_id')
@@ -73,8 +80,12 @@ class OrderInfoResponse extends BaseResponse<Order> {
   final List<OrderResponse> orderList;
 
   @override
-  Order toEntity() {
-    return Order();
+  OrderInfo toEntity() {
+    return OrderInfo(
+      managerID: this.managerID,
+      orderImage:  this.orderImage,
+      orderList: _toEntityList(orderList),
+    );
   }
 
   OrderInfoResponse({
