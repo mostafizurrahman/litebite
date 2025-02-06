@@ -22,12 +22,13 @@ class TapWidget extends StatelessWidget {
   final bool isEnabled;
   final VoidCallback? onTapWidget;
   final Widget? child;
-
+  final bool isHorizontal;
   const TapWidget({
     super.key,
+    this.isHorizontal = true,
     this.tapAction,
     this.onTapWidget,
-    this.title = 'Tap Me',
+    this.title = '',
     this.subtitle = '',
     this.iconData,
     this.background = UIConstant.primary,
@@ -43,7 +44,10 @@ class TapWidget extends StatelessWidget {
     this.isEnabled = true,
     this.tapData,
     this.child,
-  });
+  }) : assert(
+          (tapData == null) == (tapAction == null),
+          "Tab action and tab data are required",
+        );
 
   bool get _hasBorder => borderWidth > 0;
 
@@ -115,6 +119,24 @@ class TapWidget extends StatelessWidget {
           _getTitleView(titleTxt),
         );
       }
+    } else if (subtitle.isNotEmpty && iconData != null) {
+      final subtitleTxt = Text(
+        subtitle,
+        style: UIConstant.buttonSubtitleST.copyWith(color: textColor ?? Colors.black12,),
+      );
+      final column = Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            iconData!,
+            color: iconColor ?? Colors.white,
+            size: 24,
+          ),
+          const SizedBox(height: 8),
+          subtitleTxt,
+        ],
+      );
+      widgets.add(column);
     }
 
     return Row(
@@ -146,6 +168,7 @@ class TapWidget extends StatelessWidget {
     return BoxDecoration(
       color: Colors.transparent,
       borderRadius: BorderRadius.circular(cornerRadius * 2),
+      border: isHorizontal ? Border.symmetric( vertical: BorderSide(color: Colors.grey, width: borderWidth)) : Border.all(color: Colors.blueAccent),
       boxShadow: _getShadow(),
     );
   }

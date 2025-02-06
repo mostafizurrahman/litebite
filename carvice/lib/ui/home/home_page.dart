@@ -1,7 +1,7 @@
 
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'bottom/bottom_tab_view.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,18 +11,26 @@ class HomePage extends StatefulWidget {
   }
 }
 
-class _HomeState extends State<HomePage> {
-
+class _HomeState extends State<HomePage> implements BottomTabInterface {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: Container(
-        color: Colors.redAccent,
-        child: Center(
-          child: Text('You are done and doing nothing'),
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Container(
+          color: Colors.white,
+          child: Center(
+            child: Text('You are done and doing nothing'),
+          ),
         ),
       ),
+      bottomNavigationBar: BottomTabView(tabInterface: this),
     );
+  }
+
+  @override
+  void onTapIndex({required int index}) {
+    // TODO: implement onTapIndex
   }
 }

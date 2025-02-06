@@ -31,6 +31,7 @@ class _LandingState extends State<LandingPage> {
   void _startInit(_){
     _signInCubit.isSignedIn();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
