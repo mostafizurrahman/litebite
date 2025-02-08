@@ -7,7 +7,7 @@ class DataStorage {
 
   DocumentSnapshot? _lastDocument;
   List<RestaurantResponse> _documents = [];
-
+  bool pullingEnd = false;
   static DataStorage get shared => _instance;
 
   DataStorage._();
@@ -20,9 +20,14 @@ class DataStorage {
 
   List<RestaurantResponse> updateStorage(
       {required List<DocumentSnapshot> documents}) {
+    if (documents.isNotEmpty) {
+      return _documents;
+    }
     if (_instance._lastDocument?.id != documents.last.id) {
       _instance._lastDocument = documents.last;
       _instance._documents.addAll(documents.map(_toResponse).toList());
+    } else {
+      pullingEnd = true;
     }
     return _documents;
   }

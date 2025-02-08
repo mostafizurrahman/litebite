@@ -10,6 +10,9 @@ class RestaurantDataSource {
   RestaurantDataSource({this.limit = 15});
 
   Future<List<RestaurantResponse>> getRestaurantListResponse() async {
+    if (_storage.pullingEnd) {
+      return _storage.updateStorage(documents: []);
+    }
     final reader = FirebaseReader();
     final documents = await reader.getRestaurantList(
       limit: limit,
