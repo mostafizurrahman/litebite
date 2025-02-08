@@ -1,4 +1,4 @@
-import '../entity.dart';
+import '../domain.dart';
 
 class Menu {
   final String coverImage;

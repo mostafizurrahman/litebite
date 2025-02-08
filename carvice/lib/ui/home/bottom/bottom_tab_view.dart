@@ -14,11 +14,10 @@ abstract class BottomTabInterface {
 
 class BottomTabView extends StatefulWidget {
 
-  BottomTabInterface tabInterface;
+  final BottomTabInterface tabInterface;
   BottomTabView({required this.tabInterface});
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _BottomTabState();
   }
 }
@@ -96,9 +95,20 @@ class _BottomTabState extends State<BottomTabView> implements TapAction{
 
     data._tabController.sink.add(isSelected);
     data.isSelected = isSelected;
+    widget.tabInterface.onTapIndex(index: data.index);
   }
 
   bool _isSelected(_TabUIData data) {
     return data.isSelected;
+  }
+
+  void _dispose(_TabUIData data) {
+    data._tabController.close();
+  }
+
+  @override
+  void dispose() {
+    _tabs.forEach(_dispose);
+    super.dispose();
   }
 }

@@ -12,8 +12,8 @@ class UIConstant  {
   static const double largeFS = 18;
   static const double buttonFS = 17;
 
-  // static const Color primary = Color(0xffcd1c18);
-  static const Color primary = Color(0xff0d76A8);
+  static const Color primary = Color(0xffE53935);
+  // static const Color primary = Color(0xff0d76A8);
   static const Color iconSelected = Color(0xff3dDD58);
   static const Color texColor = Color(0xff3d3c48);
   static const Color titleColor = Colors.black54;

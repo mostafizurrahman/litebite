@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../domain/entity.dart';
+import '../../domain/domain.dart';
 
 // add the single generated code file produced by json_serializer
 // applied to all the modules

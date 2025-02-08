@@ -42,6 +42,8 @@ dependencies:
   flutter_svg: ^2.0.17
   flutter_bloc: ^9.0.0
   google_sign_in: ^6.2.2
+  cloud_firestore: ^5.6.3
+  either_dart: ^1.0.0
   uisystem:
     path: ../system/uisystem
 dev_dependencies:
