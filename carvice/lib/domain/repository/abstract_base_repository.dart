@@ -17,6 +17,6 @@ mixin ErrorRepositoryMixin {
       );
       return errorEntity;
     }
-    return ErrorEntity();
+    return ErrorEntity(errorReason: exception.toString(), errorCode: '400');
   }
 }

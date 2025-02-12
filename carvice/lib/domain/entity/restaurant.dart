@@ -13,6 +13,7 @@ class Restaurant {
   final List<Review> reviews;
   final List<String> waiters;
   final Timing timing;
+
   Restaurant({
     required this.coverImage,
     required this.profileImage,
@@ -29,7 +30,7 @@ class Restaurant {
   });
 }
 
-class Timing{
+class Timing {
   final String openTime;
   final String closeTime;
 
