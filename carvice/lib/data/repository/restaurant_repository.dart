@@ -26,4 +26,10 @@ class RestaurantRepositoryImpl
   Restaurant _toEntity(RestaurantResponse restaurant) {
     return restaurant.toEntity();
   }
+
+  @override
+  Future<Either<List<Epicure>, ErrorEntity>> getEpicure(final String userID) {
+    // TODO: implement getEpicureList
+    throw UnimplementedError();
+  }
 }
