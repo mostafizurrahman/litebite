@@ -27,6 +27,8 @@ class OrderMenuResponse extends BaseResponse<OrderMenu> {
     required this.menuPrice,
     required this.menuID,
   });
+
+  factory OrderMenuResponse.fromJson(Map<String, dynamic> json) => _$OrderMenuResponseFromJson(json);
 }
 
 @JsonSerializable(createToJson: false)
@@ -68,6 +70,7 @@ class OrderResponse extends BaseResponse<Order> {
     required this.tableList,
     required this.userList,
   });
+  factory OrderResponse.fromJson(Map<String, dynamic> json) => _$OrderResponseFromJson(json);
 }
 
 @JsonSerializable(createToJson: false)
@@ -76,7 +79,7 @@ class OrderInfoResponse extends BaseResponse<OrderInfo> {
   final String orderImage;
   @JsonKey(name: 'manager_id')
   final String managerID;
-  @JsonKey(name: 'order_list')
+  @JsonKey(name: 'order_list', defaultValue: [])
   final List<OrderResponse> orderList;
 
   @override
@@ -93,4 +96,5 @@ class OrderInfoResponse extends BaseResponse<OrderInfo> {
     required this.managerID,
     required this.orderList,
   });
+  factory OrderInfoResponse.fromJson(Map<String, dynamic> json) => _$OrderInfoResponseFromJson(json);
 }
