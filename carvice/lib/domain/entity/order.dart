@@ -5,7 +5,7 @@ class FoodOrder {
   final String orderID;
   final TableData tableData;
   final String orderStatus;
-  final List<String> userList;
+  final String userID;
   final List<OrderMenu> menuList;
   final List<String> waiters;
   final DateTime orderTime;
@@ -14,7 +14,7 @@ class FoodOrder {
     required this.orderID,
     required this.tableData,
     required this.orderStatus,
-    required this.userList,
+    required this.userID,
     required this.menuList,
     required this.waiters,
     required this.orderTime,

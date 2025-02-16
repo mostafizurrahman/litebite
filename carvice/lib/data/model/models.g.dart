@@ -116,9 +116,9 @@ OrderMenuResponse _$OrderMenuResponseFromJson(Map<String, dynamic> json) =>
 
 TableDataResponse _$TableDataResponseFromJson(Map<String, dynamic> json) =>
     TableDataResponse(
-      tableID: json['tableID'] as String,
-      tableNo: json['tableNo'] as num,
-      waiterID: json['waiterID'] as String,
+      tableID: json['table_id'] as String,
+      tableNo: json['table_no'] as num,
+      waiterID: json['waiter_id'] as String,
     );
 
 OrderResponse _$OrderResponseFromJson(Map<String, dynamic> json) =>
@@ -134,8 +134,7 @@ OrderResponse _$OrderResponseFromJson(Map<String, dynamic> json) =>
       orderStatus: json['order_status'] as String,
       tableData:
           TableDataResponse.fromJson(json['table'] as Map<String, dynamic>),
-      userList:
-          (json['user_list'] as List<dynamic>).map((e) => e as String).toList(),
+      userID: json['user_id'] as String,
     );
 
 OrderInfoResponse _$OrderInfoResponseFromJson(Map<String, dynamic> json) =>

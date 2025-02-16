@@ -42,8 +42,11 @@ class OrderMenuResponse extends BaseResponse<OrderMenu> {
 
 @JsonSerializable(createToJson: false)
 class TableDataResponse extends BaseResponse<TableData> {
+  @JsonKey(name: 'table_id')
   final String tableID;
+  @JsonKey(name: 'waiter_id')
   final String waiterID;
+  @JsonKey(name: 'table_no')
   final num tableNo;
 
   TableDataResponse({
@@ -71,8 +74,8 @@ class OrderResponse extends BaseResponse<FoodOrder> {
   final TableDataResponse tableData;
   @JsonKey(name: 'order_status')
   final String orderStatus;
-  @JsonKey(name: 'user_list')
-  final List<String> userList;
+  @JsonKey(name: 'user_id')
+  final String userID;
   @JsonKey(name: 'foods')
   final List<OrderMenuResponse> menuList;
 
@@ -89,7 +92,7 @@ class OrderResponse extends BaseResponse<FoodOrder> {
       orderStatus: orderStatus,
       orderTime: orderTime,
       tableData: _toEntity(tableData),
-      userList: userList,
+      userID: userID,
       waiters: waiters,
     );
   }
@@ -101,7 +104,7 @@ class OrderResponse extends BaseResponse<FoodOrder> {
     required this.menuList,
     required this.orderStatus,
     required this.tableData,
-    required this.userList,
+    required this.userID,
   });
 
   factory OrderResponse.fromJson(Map<String, dynamic> json) =>
