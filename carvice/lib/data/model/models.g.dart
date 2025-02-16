@@ -110,6 +110,15 @@ OrderMenuResponse _$OrderMenuResponseFromJson(Map<String, dynamic> json) =>
       quantity: json['quantity'] as num? ?? 1,
       menuPrice: json['unit_price'] as num? ?? 0,
       menuID: json['menu_id'] as String,
+      time: const TimestampConverter().fromJson(json['time'] as Timestamp),
+      tableID: json['table'] as String,
+    );
+
+TableDataResponse _$TableDataResponseFromJson(Map<String, dynamic> json) =>
+    TableDataResponse(
+      tableID: json['tableID'] as String,
+      tableNo: json['tableNo'] as num,
+      waiterID: json['waiterID'] as String,
     );
 
 OrderResponse _$OrderResponseFromJson(Map<String, dynamic> json) =>
@@ -117,14 +126,14 @@ OrderResponse _$OrderResponseFromJson(Map<String, dynamic> json) =>
       orderID: json['order_id'] as String,
       waiters:
           (json['waiters'] as List<dynamic>).map((e) => e as String).toList(),
-      orderTime: json['order_time'] as String,
-      menuList: (json['menu_list'] as List<dynamic>)
+      orderTime:
+          const TimestampConverter().fromJson(json['order_time'] as Timestamp),
+      menuList: (json['foods'] as List<dynamic>)
           .map((e) => OrderMenuResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
       orderStatus: json['order_status'] as String,
-      tableList: (json['table_list'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      tableData:
+          TableDataResponse.fromJson(json['table'] as Map<String, dynamic>),
       userList:
           (json['user_list'] as List<dynamic>).map((e) => e as String).toList(),
     );

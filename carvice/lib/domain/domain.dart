@@ -9,6 +9,7 @@ export 'entity/menu_table.dart';
 export 'entity/order_menu.dart';
 export 'entity/order_info.dart';
 export 'entity/error.dart';
+export 'entity/table_data.dart';
 export 'repository/restaurant_repository.dart';
 export 'entity/epicure.dart';
 export 'entity/waiter.dart';
