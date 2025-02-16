@@ -15,7 +15,7 @@ class Epicure {
   final String email;
   final String mobile;
   final String name;
-  final List<Order> orders;
+  final List<FoodOrder> orders;
   final String loginType;
   final bool premium;
   final String profession;

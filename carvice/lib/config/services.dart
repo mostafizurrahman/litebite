@@ -3,10 +3,9 @@ import 'package:get_it/get_it.dart';
 import '../data/data.dart';
 import '../domain/domain.dart';
 
-final service = GetIt.asNewInstance();
+final service = GetIt.instance;
 
 Future<void> initServices() async {
-  service.reset(dispose: true);
   service.registerFactoryParam<RestaurantDataSource, int, void>(
     _getRestaurantDataSource,
   );

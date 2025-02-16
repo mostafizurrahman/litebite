@@ -1,3 +1,5 @@
+import 'package:carvice/domain/entity/restaurant_order.dart';
+
 import '../domain.dart';
 
 class Restaurant {
@@ -11,9 +13,9 @@ class Restaurant {
   final String? email;
   final String restaurantID;
   final List<Review> reviews;
-  final List<String> waiters;
+  final List<Waiter> waiters;
   final Timing timing;
-
+  final List<RestaurantOrder> orders;
   Restaurant({
     required this.coverImage,
     required this.profileImage,
@@ -27,6 +29,7 @@ class Restaurant {
     required this.reviews,
     required this.waiters,
     required this.timing,
+    required this.orders,
   });
 }
 

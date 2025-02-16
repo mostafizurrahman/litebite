@@ -11,4 +11,5 @@ export 'entity/order_info.dart';
 export 'entity/error.dart';
 export 'repository/restaurant_repository.dart';
 export 'entity/epicure.dart';
+export 'entity/waiter.dart';
 export 'usecase/restaurant_usecase.dart';

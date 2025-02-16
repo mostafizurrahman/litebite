@@ -1,3 +1,4 @@
+import 'package:carvice/config/services.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart'; //
 import 'firebase_options.dart';
@@ -5,6 +6,7 @@ import 'ui/registration/otp_registration_page.dart';
 import 'ui/start/landing_page.dart'; // Generated file
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initServices();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }

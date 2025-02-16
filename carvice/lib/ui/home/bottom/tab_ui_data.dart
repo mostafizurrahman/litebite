@@ -31,7 +31,7 @@ List<_TabUIData> _getTabList() {
       index: i,
       iconData: icons[i],
       title: titles[i],
-      isSelected: i == 2,
+      isSelected: i == 0,
     );
     tabs.add(tab);
   }

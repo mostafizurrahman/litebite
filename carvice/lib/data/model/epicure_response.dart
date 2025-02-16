@@ -16,19 +16,22 @@ class ConnectionResponse extends BaseResponse<Connection> {
   Connection toEntity() => Connection(userID: userID, status: state);
 }
 
+@JsonSerializable(createToJson: false)
 class EpicureResponse extends BaseResponse<Epicure> {
   final List<ConnectionResponse> connections;
   @JsonKey(name: 'cover_image', defaultValue: '')
   final String coverImage;
   @JsonKey(name: 'profile_image', defaultValue: '')
   final String profileImage;
+
+  @TimestampConverter()
   @JsonKey(name: 'date_subscription')
   final DateTime? dateSubscribed;
   final String email;
   final String mobile;
   final String name;
   @JsonKey(defaultValue: <Order>[])
-  final List<Order> orders;
+  final List<OrderResponse> orders;
   @JsonKey(name: 'login_type', defaultValue: 'email')
   final String loginType;
   @JsonKey(defaultValue: false)
@@ -46,7 +49,7 @@ class EpicureResponse extends BaseResponse<Epicure> {
         email: email,
         mobile: mobile,
         name: name,
-        orders: orders,
+        orders: _toEntityList(orders),
         loginType: loginType,
         premium: premium,
         profession: profession,
@@ -66,4 +69,6 @@ class EpicureResponse extends BaseResponse<Epicure> {
     required this.profession,
     required this.userID,
   });
+  factory EpicureResponse.fromJson(final Map<String, dynamic> json) =>
+      _$EpicureResponseFromJson(json);
 }

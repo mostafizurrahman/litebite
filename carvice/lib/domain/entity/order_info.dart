@@ -1,7 +1,7 @@
 import 'order.dart';
 
 class OrderInfo {
-  final List<Order> orderList;
+  final List<FoodOrder> orderList;
   final String orderImage;
   final String managerID;
 

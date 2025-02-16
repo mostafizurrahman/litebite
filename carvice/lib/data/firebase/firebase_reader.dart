@@ -16,12 +16,12 @@ class FirebaseReader {
     required final int limit,
     required DocumentSnapshot? lastSnap,
   }) async {
-    final cursor = [lastSnap?.get(FBConstants.fieldIndex)];
+    final cursor = [lastSnap];
     final query = _db
-        .collection(FBConstants.dbRestaurant)
-        .orderBy(FBConstants.fieldIndex, descending: true)
-        .startAfter(cursor) // Start after the last document
-        .limit(limit);
+        .collection(FBConstants.dbRestaurant);
+        // .orderBy(FBConstants.fieldIndex, descending: true)
+        // .startAfter(cursor) // Start after the last document
+        // .limit(limit);
 
     QuerySnapshot snapshot = await query.get(GetOptions(source: Source.cache));
     if (snapshot.docs.isEmpty) {
@@ -32,4 +32,27 @@ class FirebaseReader {
     }
     return [];
   }
+
+
+
+  Future<DocumentSnapshot?> getUserBy({
+    required String userID,
+  }) async {
+
+    final query = _db.collection(FBConstants.dbUser).where('user_id', isEqualTo: userID);
+    // .orderBy(FBConstants.fieldIndex, descending: true)
+    // .startAfter(cursor) // Start after the last document
+    // .limit(limit);
+
+    QuerySnapshot snapshot = await query.get(GetOptions(source: Source.cache));
+    if (snapshot.docs.isEmpty) {
+      snapshot = await query.get(GetOptions(source: Source.server));
+    }
+    if (snapshot.docs.isNotEmpty) {
+      return snapshot.docs.first;
+    }
+    return null;
+  }
+
+
 }

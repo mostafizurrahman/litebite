@@ -3,15 +3,15 @@ import 'package:either_dart/either.dart';
 import '../domain.dart';
 import 'abstract_usecase.dart';
 
-typedef EpicureListEither = Either<List<Epicure>, ErrorEntity>;
+typedef EpicureEither = Either<Epicure, ErrorEntity>;
 
-class EpicureUseCase extends BaseUseCase<EpicureListEither, String> {
+class GetEpicureUseCase extends BaseUseCase<EpicureEither, String> {
   final RestaurantRepository repository;
 
-  EpicureUseCase({required this.repository});
+  GetEpicureUseCase({required this.repository});
 
   @override
-  Future<EpicureListEither> call(String input) async {
+  Future<EpicureEither> call(String input) async {
     final eitherData = await repository.getEpicure(input);
     return eitherData;
   }

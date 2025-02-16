@@ -1,6 +1,6 @@
 import 'order_menu.dart';
 
-class Order {
+class FoodOrder {
   final String orderID;
   final List<String> tableList;
   final String orderStatus;
@@ -10,7 +10,7 @@ class Order {
 
   final String orderTime;
 
-  Order({
+  FoodOrder({
     required this.orderID,
     required this.tableList,
     required this.orderStatus,

@@ -23,6 +23,7 @@ class TapWidget extends StatelessWidget {
   final VoidCallback? onTapWidget;
   final Widget? child;
   final bool isHorizontal;
+
   const TapWidget({
     super.key,
     this.isHorizontal = true,
@@ -122,7 +123,9 @@ class TapWidget extends StatelessWidget {
     } else if (subtitle.isNotEmpty && iconData != null) {
       final subtitleTxt = Text(
         subtitle,
-        style: UIConstant.buttonSubtitleST.copyWith(color: textColor ?? Colors.black12,),
+        style: UIConstant.buttonSubtitleST.copyWith(
+          color: textColor ?? Colors.black12,
+        ),
       );
       final column = Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -168,9 +171,21 @@ class TapWidget extends StatelessWidget {
     return BoxDecoration(
       color: Colors.transparent,
       borderRadius: BorderRadius.circular(cornerRadius * 2),
-      border: isHorizontal ? Border.symmetric( vertical: BorderSide(color: Colors.grey, width: borderWidth)) : Border.all(color: Colors.blueAccent),
+      border: _getBorder(),
       boxShadow: _getShadow(),
     );
+  }
+
+  Border? _getBorder() {
+    if (borderWidth > 0) {
+      if (isHorizontal) {
+        return Border.symmetric(
+          vertical: BorderSide(color: Colors.grey, width: borderWidth),
+        );
+      }
+      return Border.all(color: Colors.blueAccent);
+    }
+    return null;
   }
 
   List<BoxShadow>? _getShadow() {

@@ -32,7 +32,7 @@ class OrderMenuResponse extends BaseResponse<OrderMenu> {
 }
 
 @JsonSerializable(createToJson: false)
-class OrderResponse extends BaseResponse<Order> {
+class OrderResponse extends BaseResponse<FoodOrder> {
   @JsonKey(name: 'order_id')
   final String orderID;
   @JsonKey(name: 'table_list')
@@ -49,8 +49,8 @@ class OrderResponse extends BaseResponse<Order> {
   final String orderTime;
 
   @override
-  Order toEntity() {
-    return Order(
+  FoodOrder toEntity() {
+    return FoodOrder(
       orderID: orderID,
       menuList: _toEntityList(menuList),
       orderStatus: orderStatus,

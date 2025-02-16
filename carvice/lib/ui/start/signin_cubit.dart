@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -5,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 abstract class SignInState {}
 
 class SignInUnknownState extends SignInState {}
+
 class SignInLandingState extends SignInState {}
 
 class SignInCompleteState extends SignInState {
@@ -61,6 +63,7 @@ class SignInCubit extends Cubit<SignInState> {
         print("User Name: ${user.displayName}");
         print("User Email: ${user.email}");
         print("Profile Picture: ${user.photoUrl}");
+        _firebaseAuthentication(user);
         final state = SignInCompleteState(
           name: user.displayName ?? '',
           email: user.email,
@@ -73,5 +76,23 @@ class SignInCubit extends Cubit<SignInState> {
       print("Google Sign-In Error: $error");
       emit(state);
     }
+  }
+
+  Future<void> _firebaseAuthentication(final GoogleSignInAccount user) async {
+    // Obtain auth details from the request
+    final googleAuth = await user.authentication;
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+
+    // Create a credential
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    // Sign in to Firebase
+    final userCredential = await _auth.signInWithCredential(credential);
+
+    final number = userCredential.user?.phoneNumber;
+    debugPrint('my number is $number');
   }
 }
