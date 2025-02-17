@@ -46,7 +46,7 @@ class _HomeState extends State<HomePage> implements BottomTabInterface {
 
   Widget _getTabView(final BuildContext ctx, final AsyncSnapshot<int> data) {
     if (data.hasData && data.data != null) {
-      return EpicureHomePage();
+      return RestaurantHomePage();
     }
     return Container(
       color: Colors.white,

@@ -1,7 +1,6 @@
 
 import 'package:carvice/ui/home/epicure/cubit/epicure_cubit.dart';
 import 'package:carvice/ui/home/epicure/widgets/epicure_home_view.dart';
-import 'package:carvice/ui/home/restaurant/widgets/restaurant_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
