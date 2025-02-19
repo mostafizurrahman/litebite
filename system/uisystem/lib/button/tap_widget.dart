@@ -94,6 +94,10 @@ class TapWidget extends StatelessWidget {
   }
 
   Widget _getButtonContent() {
+
+    if (title.isEmpty && subtitle.isEmpty && iconData != null) {
+      return Icon(iconData, color: iconColor ?? UIConstant.primary);
+    }
     final List<Widget> widgets = [];
 
     if (title.isNotEmpty) {

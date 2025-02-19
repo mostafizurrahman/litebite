@@ -23,7 +23,7 @@ class FirebaseReader {
         // .startAfter(cursor) // Start after the last document
         // .limit(limit);
 
-    QuerySnapshot snapshot = await query.get(GetOptions(source: Source.cache));
+    QuerySnapshot snapshot = await query.get(GetOptions(source: Source.server));
     if (snapshot.docs.isEmpty) {
       snapshot = await query.get(GetOptions(source: Source.server));
     }

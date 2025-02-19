@@ -17,4 +17,6 @@ class ContainerTheme {
       ),
     ],
   );
+
+  static BoxDecoration get shadowDecCircle =>shadowDec.copyWith(borderRadius: BorderRadius.all(Radius.circular(100)),);
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'cubit/restaurant_state.dart';
 import 'widgets/food_filter_view.dart';
+import 'widgets/restaurant_home_view.dart';
 import 'widgets/restaurant_view.dart';
 
 class RestaurantHomePage extends StatefulWidget {
@@ -28,11 +29,10 @@ class _RestaurantHomeState extends State<RestaurantHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
-          Container(
-            child: Text('Restaurants'),
-          ),
+
           FoodFilterView(),
           Expanded(
             child: BlocBuilder(
@@ -70,7 +70,7 @@ class _RestaurantHomeState extends State<RestaurantHomePage> {
   Widget _getRestaurantView(BuildContext context, int index) {
     final state = _restaurantCubit.state as RestaurantListState;
     final restaurants = state.restaurants;
-    return RestaurantView(restaurant: restaurants[index]);
+    return RestaurantHomeView(restaurant: restaurants[index]);
 
   }
 }

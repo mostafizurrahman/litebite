@@ -11,6 +11,14 @@ class UITextTheme {
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
+  static const hintTxt = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w300,
+  );
+  static const tsTitleL = TextStyle(
+    fontSize: 26,
+    fontWeight: FontWeight.w600,
+  );
 
   static const tsNormal = TextStyle(
     fontSize: 14,

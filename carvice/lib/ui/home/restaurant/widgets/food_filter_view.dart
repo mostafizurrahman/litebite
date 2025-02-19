@@ -26,22 +26,55 @@ class _FoodFilterState extends State<FoodFilterView>
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.white,
       child: Padding(
         padding: ContainerTheme.padding,
-        child: Container(
-          width: double.maxFinite,
-          height: 120,
-          decoration: ContainerTheme.shadowDec,
-          child: Row(
-            children: [
-              TapWidget(
-                iconData: FlutterIcons.filter_mdi,
-                cornerRadius: 5,
-                onTapWidget: _onTapWidget,
-                width: width * 0.25,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Text(
+                'Restaurants',
+                style: UITextTheme.tsTitleL,
               ),
-            ],
-          ),
+            ),
+            Row(
+              children: [
+                Container(
+                  decoration: ContainerTheme.shadowDecCircle,
+                  child: TapWidget(
+                    iconData: Icons.filter_list,
+                    cornerRadius: width * 0.25,
+                    onTapWidget: _onTapWidget,
+                    background: Colors.black12,
+                    width: 50,
+                    height: 50,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Container(
+                    height: 50,
+                    decoration: ContainerTheme.shadowDecCircle,
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Search...",
+                        hintStyle: UITextTheme.hintTxt,
+                        border: InputBorder.none, // Removes default underline
+                        icon: const Icon(
+                          Icons.search,
+                          color: Colors.black54,
+                        ), // Search icon
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+          ],
         ),
       ),
     );
