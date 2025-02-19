@@ -5,6 +5,8 @@ import 'package:icons_flutter/icons_flutter.dart';
 import 'package:uisystem/uisystem.dart';
 
 import 'dialog_data_model.dart';
+import 'filter_dialog_content_view.dart';
+
 //contains
 // 1. search view
 // 2. filter button
@@ -19,7 +21,8 @@ class FoodFilterView extends StatefulWidget {
   }
 }
 
-class _FoodFilterState extends State<FoodFilterView> {
+class _FoodFilterState extends State<FoodFilterView>
+    implements SearchInterface {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -49,6 +52,14 @@ class _FoodFilterState extends State<FoodFilterView> {
   }
 
   Widget _getBuilder(final BuildContext ctx) {
+    return FilterDialog(
+      dataList: foodFilterList,
+      searchInterface: this,
+    );
+  }
 
+  @override
+  void onSelectedFilter(List<FoodResData> dataList) {
+    debugPrint('---selected filter --- ${dataList[0].title}');
   }
 }

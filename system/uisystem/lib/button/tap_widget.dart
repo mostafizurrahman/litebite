@@ -85,8 +85,8 @@ class TapWidget extends StatelessWidget {
     return Ink(
       color: isEnabled ? background : Colors.grey,
       child: InkWell(
-        splashColor: Colors.amber,
-        focusColor: Colors.redAccent,
+        splashColor: UIConstant.splashColor,
+        focusColor: UIConstant.focusColor,
         onTap: isEnabled ? _onTap : null,
         child: _getButtonContent(),
       ),

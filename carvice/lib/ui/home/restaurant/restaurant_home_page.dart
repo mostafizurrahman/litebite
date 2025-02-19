@@ -1,10 +1,11 @@
-import 'package:carvice/ui/home/restaurant/widgets/restaurant_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import './cubit/restaurant_cubit.dart';
 import 'package:flutter/material.dart';
 
 import 'cubit/restaurant_state.dart';
+import 'widgets/food_filter_view.dart';
+import 'widgets/restaurant_view.dart';
 
 class RestaurantHomePage extends StatefulWidget {
   const RestaurantHomePage();
@@ -21,17 +22,18 @@ class _RestaurantHomeState extends State<RestaurantHomePage> {
   @override
   void initState() {
     super.initState();
+    _restaurantCubit.getRestaurantList();
   }
 
   @override
   Widget build(BuildContext context) {
-    _restaurantCubit.getRestaurantList();
     return Scaffold(
       body: Column(
         children: [
           Container(
             child: Text('Restaurants'),
           ),
+          FoodFilterView(),
           Expanded(
             child: BlocBuilder(
               bloc: _restaurantCubit,
@@ -56,7 +58,9 @@ class _RestaurantHomeState extends State<RestaurantHomePage> {
     }
     if (state is RestaurantListState) {
       return ListView.builder(
-          itemCount: state.restaurants.length, itemBuilder: _getRestaurantView);
+        itemCount: state.restaurants.length,
+        itemBuilder: _getRestaurantView,
+      );
     }
     return Center(
       child: CircularProgressIndicator(),
@@ -67,12 +71,6 @@ class _RestaurantHomeState extends State<RestaurantHomePage> {
     final state = _restaurantCubit.state as RestaurantListState;
     final restaurants = state.restaurants;
     return RestaurantView(restaurant: restaurants[index]);
-    return ListTile(
-        leading: const Icon(Icons.list),
-        trailing: const Text(
-          "GFG",
-          style: TextStyle(color: Colors.green, fontSize: 15),
-        ),
-        title: Text("List item $index"));
+
   }
 }

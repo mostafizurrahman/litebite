@@ -14,7 +14,7 @@ enum RestaurantFilterType {
   fast_Food,
 }
 abstract class SearchInterface {
-  void onSelectedFilter(FoodResData data);
+  void onSelectedFilter(List<FoodResData> dataList);
 }
 // Model class for food restaurant data
 class FoodResData {
