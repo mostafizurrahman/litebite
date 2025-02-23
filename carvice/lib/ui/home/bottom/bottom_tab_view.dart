@@ -93,9 +93,12 @@ class _BottomTabState extends State<BottomTabView> implements TapAction{
 
   void _changeTab(_TabUIData data, bool isSelected) {
 
+    debugPrint('---index ${data.index}');
     data._tabController.sink.add(isSelected);
     data.isSelected = isSelected;
-    widget.tabInterface.onTapIndex(index: data.index);
+    if(isSelected) {
+      widget.tabInterface.onTapIndex(index: data.index);
+    }
   }
 
   bool _isSelected(_TabUIData data) {

@@ -26,7 +26,7 @@ class DataStorage {
     // if (documents.isNotEmpty) {
     //   return _documents;
     // }
-    if (_instance._lastDocument?.id != documents.last.id) {
+    if (documents.isNotEmpty && _instance._lastDocument?.id != documents.last.id) {
       _instance._lastDocument = documents.last;
       _instance._documents.addAll(documents.map(_toRestaurantResponse).toList());
     } else {

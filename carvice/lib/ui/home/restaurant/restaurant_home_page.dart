@@ -1,3 +1,4 @@
+import 'package:carvice/ui/home/restaurant/details/restaurant_profile_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import './cubit/restaurant_cubit.dart';
@@ -32,7 +33,6 @@ class _RestaurantHomeState extends State<RestaurantHomePage> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-
           FoodFilterView(),
           Expanded(
             child: BlocBuilder(
@@ -70,7 +70,17 @@ class _RestaurantHomeState extends State<RestaurantHomePage> {
   Widget _getRestaurantView(BuildContext context, int index) {
     final state = _restaurantCubit.state as RestaurantListState;
     final restaurants = state.restaurants;
-    return RestaurantHomeView(restaurant: restaurants[index]);
-
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (builder) {
+              return RestaurantProfilePage(restaurant: restaurants[index]);
+            },
+          ),
+        );
+      },
+      child: RestaurantHomeView(restaurant: restaurants[index]),
+    );
   }
 }

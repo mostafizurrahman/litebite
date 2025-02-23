@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../../config/services.dart';
 import 'bottom/bottom_tab_view.dart';
 import 'epicure/epicure_home_page.dart';
+import 'personal/user_home_view.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -31,7 +32,6 @@ class _HomeState extends State<HomePage> implements BottomTabInterface {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -40,13 +40,18 @@ class _HomeState extends State<HomePage> implements BottomTabInterface {
           builder: _getTabView,
         ),
       ),
-      // bottomNavigationBar: BottomTabView(tabInterface: this),
+      bottomNavigationBar: BottomTabView(tabInterface: this),
     );
   }
 
   Widget _getTabView(final BuildContext ctx, final AsyncSnapshot<int> data) {
     if (data.hasData && data.data != null) {
-      return RestaurantHomePage();
+      if (data.data == 1) {
+        return UserHomePage();
+      } else if (data.data == 0) {
+        return RestaurantHomePage();
+      }
+      return Container(color: Colors.redAccent);
     }
     return Container(
       color: Colors.white,
