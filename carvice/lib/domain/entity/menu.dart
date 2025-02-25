@@ -3,7 +3,7 @@ import '../domain.dart';
 class Menu {
   final String coverImage;
   final String profileImage;
-
+  final LocalizedText menuName;
   final List<String> foodImages;
   final String menuID;
   final String ownerID;
@@ -21,5 +21,6 @@ class Menu {
     required this.reviewList,
     required this.foodType,
     required this.isPopular,
+    required this.menuName,
   });
 }

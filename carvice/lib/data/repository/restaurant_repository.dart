@@ -13,14 +13,14 @@ with ErrorRepositoryMixin
   RestaurantRepositoryImpl({required this.dataSource});
 
   Future<Either<List<Restaurant>, ErrorEntity>> getRestaurantList() async {
-    try {
+    // try {
       final data = await dataSource.getRestaurantListResponse();
       final restaurants = data.map(toEntity).toList();
       return Left(restaurants);
-    } catch (ex) {
-      final error = super.getBaseError(ex);
-      return Right(error);
-    }
+    // } catch (ex) {
+    //   final error = super.getBaseError(ex);
+    //   return Right(error);
+    // }
   }
 
   @override

@@ -21,6 +21,7 @@ class MenuResponse extends BaseResponse<Menu> {
   final List<String> reviewList;
   @JsonKey(name: 'type', defaultValue: '')
   final String foodType;
+  final LocalizedResponse description;
   MenuResponse({
     required this.coverImage,
     required this.profileImage,
@@ -31,6 +32,7 @@ class MenuResponse extends BaseResponse<Menu> {
     required this.reviewList,
     required this.foodType,
     required this.isPopular,
+    required this.description,
   });
   factory MenuResponse.fromJson(Map<String, dynamic> json) => _$MenuResponseFromJson(json);
 
@@ -46,6 +48,7 @@ class MenuResponse extends BaseResponse<Menu> {
       reviewList: reviewList,
       foodType: foodType,
       isPopular: isPopular,
+      menuName: description.toEntity(),
     );
   }
 }

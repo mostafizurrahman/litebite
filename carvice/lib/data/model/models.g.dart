@@ -27,6 +27,8 @@ MenuResponse _$MenuResponseFromJson(Map<String, dynamic> json) => MenuResponse(
           .toList(),
       foodType: json['type'] as String? ?? '',
       isPopular: json['popular'] as bool? ?? false,
+      description: LocalizedResponse.fromJson(
+          json['description'] as Map<String, dynamic>),
     );
 
 PriceResponse _$PriceResponseFromJson(Map<String, dynamic> json) =>
