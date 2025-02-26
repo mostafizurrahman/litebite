@@ -16,6 +16,7 @@ class Restaurant {
   final List<Waiter> waiters;
   final Timing timing;
   final List<RestaurantOrder> orders;
+  final String type;
   Restaurant({
     required this.coverImage,
     required this.profileImage,
@@ -30,6 +31,7 @@ class Restaurant {
     required this.waiters,
     required this.timing,
     required this.orders,
+    required this.type,
   });
 }
 

@@ -20,29 +20,40 @@ class _RestaurantMediaState extends State<RestaurantMediaView> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: width * 0.5,
+      height: height * 0.2,
       child: Stack(
         children: [
-          CachedNetworkImage(imageUrl: widget.restaurant.coverImage, fit: BoxFit.fitWidth, width: width, ),
+          CachedNetworkImage(
+            imageUrl: widget.restaurant.coverImage,
+            fit: BoxFit.fitWidth,
+            width: width,
+          ),
           Positioned(
             left: 12,
             bottom: 12,
             child: Row(
               children: [
-                CustomProfileImage(imageUrl: widget.restaurant.profileImage, size: 120,),
+                CustomProfileImage(
+                  imageUrl: widget.restaurant.profileImage,
+                  size: 120,
+                ),
                 const SizedBox(width: 12),
                 Text(
                   widget.restaurant.name.txt,
                   style: TextStyle(
                     fontSize: 42, // Adjust font size
                     fontWeight: FontWeight.bold, // Make text bold
-                    color: Colors.limeAccent, // Primary text color
+                    color: Colors.white, // Primary text color
                     shadows: [
                       Shadow(
-                        color: Colors.white, // White shadow
-                        blurRadius: 15,
-                        // 4-radius shadow
-                         offset: Offset(4, 4), // Slight offset for depth
+                        color: Colors.black.withOpacity(0.9), // Deeper shadow
+                        blurRadius: 10,  // More spread
+                        offset: Offset(3, 3), // Bigger offset
+                      ),
+                      Shadow(
+                        color: Colors.black.withOpacity(0.5), // Extra layer for depth
+                        blurRadius: 12,
+                        offset: Offset(5, 5),
                       ),
                     ],
                   ),
@@ -73,7 +84,8 @@ class CustomProfileImage extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: Colors.white, width: 3), // 3-width white border
+        border: Border.all(color: Colors.white, width: 3),
+        // 3-width white border
         boxShadow: [
           BoxShadow(
             color: Colors.white.withOpacity(0.5), // White shadow

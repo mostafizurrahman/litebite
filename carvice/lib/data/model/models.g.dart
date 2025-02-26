@@ -54,6 +54,7 @@ WaiterResponse _$WaiterResponseFromJson(Map<String, dynamic> json) =>
 
 RestaurantResponse _$RestaurantResponseFromJson(Map<String, dynamic> json) =>
     RestaurantResponse(
+          type: json['type'] as String,
       coverImage: json['cover_image'] as String?,
       profileImage: json['profile_image'] as String?,
       description: LocalizedResponse.fromJson(

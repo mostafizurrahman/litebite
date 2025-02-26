@@ -64,7 +64,7 @@ class RestaurantResponse extends BaseResponse<Restaurant> {
   final TimingResponse timing;
   @JsonKey(name: 'order', defaultValue: [])
   final List<RestaurantOrderResponse> orders;
-
+  final String type;
   RestaurantResponse({
     required this.coverImage,
     required this.profileImage,
@@ -79,6 +79,7 @@ class RestaurantResponse extends BaseResponse<Restaurant> {
     required this.waiters,
     required this.timing,
     required this.orders,
+    required this.type
   });
 
   factory RestaurantResponse.fromJson(Map<String, dynamic> json) =>
@@ -100,6 +101,7 @@ class RestaurantResponse extends BaseResponse<Restaurant> {
       waiters: _toEntityList(waiters),
       timing: _toEntity(timing),
       orders: _toEntityList(orders),
+      type: type,
     );
   }
 }
