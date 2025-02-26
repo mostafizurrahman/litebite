@@ -15,6 +15,7 @@ class UIConstant  {
   static const Color  splashColor = Colors.amber;
   static const Color focusColor = Colors.redAccent;
   static const Color primary = Color(0xffE53935);
+  static const Color amber = Colors.amber;
   // static const Color primary = Color(0xff0d76A8);
   static const Color iconSelected = Color(0xff3dDD58);
   static const Color texColor = Color(0xff3d3c48);

@@ -5,10 +5,18 @@ import 'package:uisystem/uisystem.dart';
 
 import '../../../../domain/domain.dart';
 
+abstract class MenuSelectionInterface {
+  void onSelected({required Menu menu});
+}
+
 class MenuView extends StatefulWidget {
+  final MenuSelectionInterface selectionInterface;
   final Menu menu;
 
-  MenuView({required this.menu});
+  MenuView({
+    required this.menu,
+    required this.selectionInterface,
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -24,36 +32,48 @@ class _MenuState extends State<MenuView> {
       decoration: ContainerTheme.shadowMenu,
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(6)),
-        child: GestureDetector(
-          onTap: () => toggleMenuSelection(widget.menu),
-          child: Stack(
-            children: [
-              CachedNetworkImage(imageUrl: widget.menu.profileImage),
-              Positioned(
-                bottom: 0,
-                left: -1,
-                right: -1,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  child: Container(
-                    height: 70,
-                    decoration: ContainerTheme.linearDecoration,
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: _widgets(),
-                        ),
-                        Divider(height: 1),
-                        Text(
-                          widget.menu.menuName.txt,
-                          style: UITextTheme.colorTitle,
-                        ),
-                      ],
-                    ),
-                  ),
+        child: Stack(
+          children: [
+            CachedNetworkImage(imageUrl: widget.menu.profileImage),
+            _getInfoWidget(),
+            Material(
+              color: Colors.transparent,
+              child: Ink(
+                child: InkWell(
+                  splashColor: UIConstant.amber.withOpacity(0.6), // Optional ripple effect color
+                  highlightColor: Colors.white.withOpacity(0.1),
+                  onTap: () => toggleMenuSelection(widget.menu),
+                  child: SizedBox.expand(),
                 ),
-              )
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _getInfoWidget() {
+    return  Positioned(
+      bottom: 0,
+      left: -1,
+      right: -1,
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+        child: Container(
+          height: 70,
+          decoration: ContainerTheme.linearDecoration,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: _widgets(),
+              ),
+              Divider(height: 1),
+              Text(
+                widget.menu.menuName.txt,
+                style: UITextTheme.colorTitle,
+              ),
             ],
           ),
         ),

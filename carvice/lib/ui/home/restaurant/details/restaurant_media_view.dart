@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:uisystem/theme/constants.dart';
 import 'package:uisystem/theme/text_theme.dart';
 
+import 'details_constant.dart';
+
 class RestaurantMediaView extends StatefulWidget {
   final Restaurant restaurant;
 
@@ -22,7 +24,7 @@ class _RestaurantMediaState extends State<RestaurantMediaView> {
   Widget build(BuildContext context) {
     final len = widget.restaurant.description.txt.length;
     return SizedBox(
-      height: height * 0.2,
+      height: height * ResDetailsConstant.mediaViewRatio,
       child: Stack(
         children: [
           CachedNetworkImage(

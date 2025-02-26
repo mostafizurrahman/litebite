@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
-import 'package:carvice/ui/utility/ui_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:uisystem/button/tap_widget.dart';
 import 'package:uisystem/theme/constants.dart';
-import 'package:uisystem/theme/text_theme.dart';
 import '../../../../domain/domain.dart';
+import 'details_constant.dart';
 
 class RestaurantDescriptionView extends StatefulWidget {
   final Restaurant restaurant;
@@ -21,8 +20,9 @@ class _RestaurantDescriptionViewState extends State<RestaurantDescriptionView> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height * 0.12;
-    final fraction = width / 3.0;
+    final height = MediaQuery.of(context).size.height *
+        ResDetailsConstant.descriptionRatio;
+    final fraction = width / ResDetailsConstant.descItemCount;
     return Container(
       width: width,
       height: height,
@@ -83,11 +83,7 @@ class _RestaurantDescriptionViewState extends State<RestaurantDescriptionView> {
 
   void _onTapType() {}
 
-
   void _onTapRating() {}
 
-
-
   void _onTapPriceRange() {}
-
 }
