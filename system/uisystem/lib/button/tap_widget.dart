@@ -9,6 +9,7 @@ class TapWidget extends StatelessWidget {
   final String title;
   final TapData? tapData;
   final String subtitle;
+  final Color? subTitleColor;
   final String imagePath;
   final Color? textColor;
   final Color? iconColor;
@@ -22,15 +23,23 @@ class TapWidget extends StatelessWidget {
   final bool isEnabled;
   final VoidCallback? onTapWidget;
   final Widget? child;
+
+  //for padding - true -> horizontal padding or false -> vertical padding
   final bool isHorizontal;
+
+  //for alignment of icon and title
+  // - true -> Column([]) or false -> Row([])
+  final bool isVertical;
 
   const TapWidget({
     super.key,
     this.isHorizontal = true,
+    this.isVertical = false,
     this.tapAction,
     this.onTapWidget,
     this.title = '',
     this.subtitle = '',
+    this.subTitleColor,
     this.iconData,
     this.background = UIConstant.primary,
     this.borderColor,
@@ -71,7 +80,7 @@ class TapWidget extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(cornerRadius),
         child: Material(
-          color: Colors.transparent,
+          // color: Colors.transparent,
           child: _getBody(context),
         ),
       ),
@@ -94,7 +103,6 @@ class TapWidget extends StatelessWidget {
   }
 
   Widget _getButtonContent() {
-
     if (title.isEmpty && subtitle.isEmpty && iconData != null) {
       return Icon(iconData, color: iconColor ?? UIConstant.primary);
     }
@@ -103,12 +111,14 @@ class TapWidget extends StatelessWidget {
     if (title.isNotEmpty) {
       final titleTxt = Text(
         title,
-        style: UIConstant.buttonTitleST,
+        style: textColor != null
+            ? UIConstant.buttonTitleST.copyWith(color: textColor)
+            : UIConstant.buttonTitleST,
       );
       if (subtitle.isNotEmpty) {
         final subtitleTxt = Text(
           subtitle,
-          style: UIConstant.buttonSubtitleST,
+          style:subTitleColor != null ? UIConstant.buttonSubtitleST.copyWith(color: subTitleColor) : UIConstant.buttonSubtitleST,
         );
         final column = Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -154,20 +164,28 @@ class TapWidget extends StatelessWidget {
   }
 
   Widget _getTitleView(Text titleTxt) {
-    if (_multipleContent)
-      return Row(
-        children: [
-          Icon(
-            iconData!,
-            color: iconColor ?? Colors.white,
-            size: 24,
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          titleTxt
-        ],
-      );
+    if (_multipleContent) {
+      final widgets = [
+        Icon(
+          iconData!,
+          color: iconColor ?? Colors.white,
+          size: 24,
+        ),
+        isVertical
+            ? const SizedBox(
+                height: 8,
+              )
+            : const SizedBox(
+                width: 8,
+              ),
+        titleTxt
+      ];
+
+      return isVertical
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center, children: widgets)
+          : Row(children: widgets);
+    }
     return titleTxt;
   }
 

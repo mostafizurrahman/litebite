@@ -2,15 +2,22 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:carvice/ui/utility/ui_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:uisystem/button/tap_widget.dart';
 import 'package:uisystem/theme/constants.dart';
 import 'package:uisystem/theme/text_theme.dart';
 import '../../../../domain/domain.dart';
 
-class RestaurantDescriptionView extends StatelessWidget {
+class RestaurantDescriptionView extends StatefulWidget {
   final Restaurant restaurant;
 
   RestaurantDescriptionView({required this.restaurant});
 
+  @override
+  State<RestaurantDescriptionView> createState() =>
+      _RestaurantDescriptionViewState();
+}
+
+class _RestaurantDescriptionViewState extends State<RestaurantDescriptionView> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -20,66 +27,67 @@ class RestaurantDescriptionView extends StatelessWidget {
       width: width,
       height: height,
       color: UIConstant.scaffoldBG,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Text(
-            restaurant.description.txt,
-            style: UITextTheme.tsTitle,
+          TapWidget(
+            iconData: Icons.fastfood,
+            iconColor: UIConstant.iconSelected,
+            cornerRadius: width * 0.25,
+            onTapWidget: _onTapType,
+            background: Colors.black54,
+            width: fraction / 1.9,
+            height: fraction / 1.9,
+            title: widget.restaurant.type,
+            isVertical: true,
+            textColor: UIConstant.buttonTxt,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                width: fraction,
-                child: Center(
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.fastfood,
-                        color: UIConstant.primary,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(restaurant.type),
-                    ],
-                  ),
-                ),
-              ),
-              Container(width: 1.5, height: height / 2, color: UIConstant.primary),
-              Container(
-                width: fraction - 3,
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.star,
-                        color: UIConstant.primary,
-                      ),
-                      const SizedBox(height: 8),
-                      Text('4.5'),
-                    ],
-                  ),
-                ),
-              ),
-              Container(width: 1.5, height: height/2, color: UIConstant.primary),
-              SizedBox(
-                width: fraction,
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text('Price Range', ),
-                      const SizedBox(height: 8),
-                      Text('150-450+'),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          Container(
+            width: 1.5,
+            height: height / 2,
+            color: UIConstant.primary,
+          ),
+          TapWidget(
+            iconData: Icons.star,
+            iconColor: Colors.yellow,
+            cornerRadius: width * 0.25,
+            onTapWidget: _onTapRating,
+            background: Colors.black54,
+            width: fraction / 1.9,
+            height: fraction / 1.9,
+            title: '4.5',
+            isVertical: true,
+            textColor: UIConstant.buttonTxt,
+          ),
+          Container(
+            width: 1.5,
+            height: height / 2,
+            color: UIConstant.primary,
+          ),
+          TapWidget(
+            cornerRadius: width * 0.25,
+            onTapWidget: _onTapPriceRange,
+            background: Colors.black54,
+            width: fraction / 1.9,
+            height: fraction / 1.9,
+            title: 'BDT',
+            subtitle: '150-450+',
+            isVertical: true,
+            textColor: UIConstant.buttonTxt,
+            subTitleColor: UIConstant.buttonTxt,
           ),
         ],
       ),
     );
   }
+
+  void _onTapType() {}
+
+
+  void _onTapRating() {}
+
+
+
+  void _onTapPriceRange() {}
+
 }

@@ -3,6 +3,7 @@ import 'package:carvice/domain/domain.dart';
 import 'package:carvice/ui/utility/ui_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:uisystem/theme/constants.dart';
 import 'package:uisystem/theme/text_theme.dart';
 
 class RestaurantMediaView extends StatefulWidget {
@@ -19,6 +20,7 @@ class RestaurantMediaView extends StatefulWidget {
 class _RestaurantMediaState extends State<RestaurantMediaView> {
   @override
   Widget build(BuildContext context) {
+    final len = widget.restaurant.description.txt.length;
     return SizedBox(
       height: height * 0.2,
       child: Stack(
@@ -38,26 +40,21 @@ class _RestaurantMediaState extends State<RestaurantMediaView> {
                   size: 120,
                 ),
                 const SizedBox(width: 12),
-                Text(
-                  widget.restaurant.name.txt,
-                  style: TextStyle(
-                    fontSize: 42, // Adjust font size
-                    fontWeight: FontWeight.bold, // Make text bold
-                    color: Colors.white, // Primary text color
-                    shadows: [
-                      Shadow(
-                        color: Colors.black.withOpacity(0.9), // Deeper shadow
-                        blurRadius: 10,  // More spread
-                        offset: Offset(3, 3), // Bigger offset
-                      ),
-                      Shadow(
-                        color: Colors.black.withOpacity(0.5), // Extra layer for depth
-                        blurRadius: 12,
-                        offset: Offset(5, 5),
-                      ),
-                    ],
-                  ),
-                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.restaurant.name.txt,
+                      style: UIConstant.shadowStyle,
+                    ),
+                    Text(
+                      widget.restaurant.description.txt
+                              .substring(0, len > 20 ? 20 : len) +
+                          (len > 20 ? "..." : ""),
+                      style: UIConstant.shadowStyle.copyWith(fontSize: 16),
+                    ),
+                  ],
+                )
               ],
             ),
           ),

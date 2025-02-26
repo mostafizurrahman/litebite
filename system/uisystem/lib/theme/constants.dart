@@ -23,7 +23,23 @@ class UIConstant  {
   static const Color buttonTxt = Colors.white;
   static const Color scaffoldBG = Color(0xffEdEcE8);
   static const Color shadowCL = Colors.grey;
-
+  static TextStyle get shadowStyle => TextStyle(
+    fontSize: 42, // Adjust font size
+    fontWeight: FontWeight.bold, // Make text bold
+    color: Colors.white, // Primary text color
+    shadows: [
+      Shadow(
+        color: Colors.black.withOpacity(0.9), // Deeper shadow
+        blurRadius: 10,  // More spread
+        offset: Offset(3, 3), // Bigger offset
+      ),
+      Shadow(
+        color: Colors.black.withOpacity(0.5), // Extra layer for depth
+        blurRadius: 12,
+        offset: Offset(5, 5),
+      ),
+    ],
+  );
   static const buttonTitleST = TextStyle(
     fontSize: UIConstant.buttonFS,
     color: UIConstant.buttonTxt,
