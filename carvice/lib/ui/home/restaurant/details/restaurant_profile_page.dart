@@ -1,14 +1,14 @@
-import 'dart:async';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carvice/domain/domain.dart';
-import 'package:carvice/ui/home/restaurant/details/menu_view.dart';
-import 'package:carvice/ui/home/restaurant/details/order_summary_view.dart';
+import 'package:carvice/ui/home/restaurant/details/menu_details_view.dart';
+import 'package:carvice/ui/home/restaurant/details/platter_size_dialog_view.dart';
 import 'package:carvice/ui/utility/ui_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uisystem/theme/text_theme.dart';
 
+import '../../../utility/ui_builder.dart';
+import '../../../widgets/gradient_blur_view.dart';
+import 'order_summary_view.dart';
 import 'restaurant_description_view.dart';
 import 'restaurant_media_view.dart';
 
@@ -24,35 +24,40 @@ class RestaurantProfilePage extends StatefulWidget {
 }
 
 class _RestaurantProfileState extends State<RestaurantProfilePage>
-    implements MenuSelectionInterface {
+    implements
+        MenuSelectionInterface,
+        MenuUpdateInterface,
+        SelectedPlatterInterface {
   List<Menu> get _menuList => widget.restaurant.menu;
 
   final _orderController = BehaviorSubject<MOrder>.seeded({});
+
+  Widget _getOrderStack() {
+    return Stack(
+      children: [
+        Column(
+          children: [
+            RestaurantMediaView(restaurant: widget.restaurant),
+            RestaurantDescriptionView(restaurant: widget.restaurant),
+          ],
+        ),
+        StreamBuilder<MOrder>(
+          stream: _orderController.stream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData && snapshot.data.hasValue) {
+              return Positioned.fill(
+                child: _getBlurOrderView(snapshot.data!),
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    Widget _getOrderStack() {
-      return Stack(
-        children: [
-          Column(
-            children: [
-              RestaurantMediaView(restaurant: widget.restaurant),
-              RestaurantDescriptionView(restaurant: widget.restaurant),
-              StreamBuilder<MOrder>(
-                stream: _orderController.stream,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData && snapshot.data.hasValue) {
-                    return OrderSummaryView(orderMap: snapshot.data!);
-                  }
-                  return const SizedBox.shrink();
-                },
-              ),
-            ],
-          )
-        ],
-      );
-    }
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -80,24 +85,59 @@ class _RestaurantProfileState extends State<RestaurantProfilePage>
     );
   }
 
+  Widget _getBlurOrderView(final MOrder menu) {
+    final view = OrderSummaryTopView<MOrder>(
+      data: menu,
+      updateInterface: this,
+    );
+    return GradientBlurView(child: view);
+  }
+
   Widget _getMenuBuilder(ctx, index) {
     final menu = _menuList[index];
-    return MenuView(menu: menu, selectionInterface: this);
+    return MenuDetailsView(menu: menu, selectionInterface: this);
   }
 
   @override
   void onSelected({required Menu menu}) {
+    if (menu.price.full > 0 || menu.price.half > 0) {
+      final child = _getPlatterSelectionView(menu: menu);
+      UIBuilder.showFoodModalSheet(context: context, child: child);
+    } else {
+      _onSelected(menu: menu);
+    }
+  }
 
+  Widget _getPlatterSelectionView({required Menu menu}) {
+    return PlatterPriceDialogView(
+      menu: menu,
+      interface: this,
+    );
+  }
+
+  void _onSelected({required Menu menu}) {
     final keyValueMap = _orderController.valueOrNull;
-    if (keyValueMap != null ) {
+    if (keyValueMap != null) {
       if (keyValueMap.keys.contains(menu)) {
         int value = keyValueMap[menu]!;
         keyValueMap[menu] = value + 1;
         _orderController.sink.add(keyValueMap);
       } else {
-        final data = {menu : 1};
+        final data = {menu: 1};
         _orderController.sink.add(data);
       }
     }
+  }
+
+  @override
+  void onUpdated({required Map<Menu, int> menuMap}) {
+    _orderController.sink.add(menuMap);
+  }
+
+  @override
+  void onSelectedPlatter({required Menu menu, required num price}) {
+    Navigator.of(context).pop();
+    menu.selectedPrice = price;
+    _onSelected(menu: menu);
   }
 }

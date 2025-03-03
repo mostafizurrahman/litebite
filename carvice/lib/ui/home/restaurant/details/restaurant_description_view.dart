@@ -22,7 +22,7 @@ class _RestaurantDescriptionViewState extends State<RestaurantDescriptionView> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height *
         ResDetailsConstant.descriptionRatio;
-    final fraction = width / ResDetailsConstant.descItemCount;
+    final fraction = height - 8;
     return Container(
       width: width,
       height: height,
@@ -36,8 +36,8 @@ class _RestaurantDescriptionViewState extends State<RestaurantDescriptionView> {
             cornerRadius: width * 0.25,
             onTapWidget: _onTapType,
             background: Colors.black54,
-            width: fraction / 1.9,
-            height: fraction / 1.9,
+            width: fraction ,
+            height: fraction ,
             title: widget.restaurant.type,
             isVertical: true,
             textColor: UIConstant.buttonTxt,
@@ -53,8 +53,8 @@ class _RestaurantDescriptionViewState extends State<RestaurantDescriptionView> {
             cornerRadius: width * 0.25,
             onTapWidget: _onTapRating,
             background: Colors.black54,
-            width: fraction / 1.9,
-            height: fraction / 1.9,
+            width: fraction ,
+            height: fraction ,
             title: '4.5',
             isVertical: true,
             textColor: UIConstant.buttonTxt,
@@ -68,8 +68,8 @@ class _RestaurantDescriptionViewState extends State<RestaurantDescriptionView> {
             cornerRadius: width * 0.25,
             onTapWidget: _onTapPriceRange,
             background: Colors.black54,
-            width: fraction / 1.9,
-            height: fraction / 1.9,
+            width: fraction ,
+            height: fraction ,
             title: 'BDT',
             subtitle: '150-450+',
             isVertical: true,

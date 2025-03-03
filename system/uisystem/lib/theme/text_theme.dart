@@ -10,11 +10,35 @@ class UITextTheme {
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
+  static const ts16Colored = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: UIConstant.primary,
+  );
   static const colorTitle = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w600,
     color: UIConstant.primary,
   );
+  static const selected14Title = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    color: UIConstant.iconSelected,
+  );
+
+  static const bold22Title = TextStyle(
+    fontSize: 22,
+    fontWeight: FontWeight.bold,
+    color: UIConstant.texColor,
+  );
+
+  static const bold22Colored = TextStyle(
+    fontSize: 22,
+    fontWeight: FontWeight.bold,
+    color: UIConstant.primary,
+  );
+
+
   static const hintTxt = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w300,
@@ -27,5 +51,11 @@ class UITextTheme {
   static const tsNormal = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,
+  );
+
+  static const ts13Subtitle = TextStyle(
+    fontSize: 13,
+    fontWeight: FontWeight.w500,
+    fontStyle: FontStyle.italic,
   );
 }

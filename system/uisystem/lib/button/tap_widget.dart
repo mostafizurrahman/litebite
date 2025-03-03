@@ -41,7 +41,7 @@ class TapWidget extends StatelessWidget {
     this.subtitle = '',
     this.subTitleColor,
     this.iconData,
-    this.background = UIConstant.primary,
+    this.background = UIConstant.scaffoldBG,
     this.borderColor,
     this.borderWidth = 0,
     this.height = 60,
@@ -88,16 +88,13 @@ class TapWidget extends StatelessWidget {
   }
 
   Widget _getBody(BuildContext context) {
-    if (child != null) {
-      return Center(child: child!);
-    }
     return Ink(
       color: isEnabled ? background : Colors.grey,
       child: InkWell(
         splashColor: UIConstant.splashColor,
-        focusColor: UIConstant.focusColor,
+        focusColor: UIConstant.primary,
         onTap: isEnabled ? _onTap : null,
-        child: _getButtonContent(),
+        child: child ?? _getButtonContent(),
       ),
     );
   }

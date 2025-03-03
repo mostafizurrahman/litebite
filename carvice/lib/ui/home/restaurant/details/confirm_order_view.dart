@@ -1,70 +1,85 @@
+
+
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carvice/ui/utility/ui_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:uisystem/theme/constants.dart';
 import 'package:uisystem/uisystem.dart';
 
 import '../../../../domain/domain.dart';
+import 'menu_details_view.dart';
 
-abstract class MenuSelectionInterface {
-  void onSelected({required Menu menu});
-}
 
-class MenuView extends StatefulWidget {
+
+
+class MenuCheckView extends StatefulWidget {
   final MenuSelectionInterface selectionInterface;
   final Menu menu;
-
-  MenuView({
+  final bool shouldDelete;
+  final int count;
+  MenuCheckView({
     required this.menu,
     required this.selectionInterface,
+    this.shouldDelete = false,
+    this.count = -1,
   });
 
   @override
   State<StatefulWidget> createState() {
-    return _MenuState();
+    return _MenuCheckState();
   }
 }
 
-class _MenuState extends State<MenuView> {
+class _MenuCheckState extends State<MenuCheckView> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Container(
-      decoration: ContainerTheme.shadowMenu,
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(6)),
-        child: Stack(
-          children: [
-            CachedNetworkImage(imageUrl: widget.menu.profileImage),
-            _getInfoWidget(),
-            Material(
-              color: Colors.transparent,
-              child: Ink(
-                child: InkWell(
-                  splashColor: UIConstant.amber.withOpacity(0.6), // Optional ripple effect color
-                  highlightColor: Colors.white.withOpacity(0.1),
-                  onTap: () => toggleMenuSelection(widget.menu),
-                  child: SizedBox.expand(),
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Container(
+        decoration:  ContainerTheme.shadowMenu,
+
+        width: width * 0.5,
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(6)),
+          child: Stack(
+            children: [
+              CachedNetworkImage(imageUrl: widget.menu.profileImage, fit: BoxFit.cover,),
+              _getInfoWidget(),
+              Material(
+                color: Colors.transparent,
+                child: Ink(
+                  child: InkWell(
+                    splashColor: UIConstant.amber.withOpacity(0.6), // Optional ripple effect color
+                    highlightColor: Colors.white.withOpacity(0.1),
+                    onTap: () => toggleMenuSelection(widget.menu),
+                    child: SizedBox.expand(),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _getInfoWidget() {
-    return  Positioned(
-      bottom: 0,
-      left: -1,
-      right: -1,
+    return  Positioned.fill(
+
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(5)),
         child: Container(
           height: 70,
           decoration: ContainerTheme.linearDecoration,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              Text('Total Count : ${widget.count}', style: UITextTheme.tsTitle,),
+
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: _widgets(),
@@ -72,7 +87,9 @@ class _MenuState extends State<MenuView> {
               Divider(height: 1),
               Text(
                 widget.menu.menuName.txt,
-                style: UITextTheme.colorTitle,
+                style: UITextTheme.selected14Title,
+                maxLines: 1, // Limits to one line
+                overflow: TextOverflow.ellipsis, // Adds "..."
               ),
             ],
           ),
@@ -82,6 +99,13 @@ class _MenuState extends State<MenuView> {
   }
 
   List<Widget> _widgets() {
+    if (widget.shouldDelete) {
+      final String type = widget.menu.selectedPrice == widget.menu.price.half ? 'Half ' : widget.menu.selectedPrice == widget.menu.price.full ? 'Full' :'Medium';
+      return [Text(
+        '$type \n${widget.menu.selectedPrice}',
+        textAlign: TextAlign.center,
+      )];
+    }
     final widgets = <Widget>[];
     if (widget.menu.price.half > 0) {
       widgets.add(
@@ -113,6 +137,7 @@ class _MenuState extends State<MenuView> {
   }
 
   void toggleMenuSelection(Menu menu) {
+    widget.selectionInterface.onSelected(menu: menu);
     // setState(() {
     //   if (selectedMenus.contains(menuName)) {
     //     selectedMenus.remove(menuName);

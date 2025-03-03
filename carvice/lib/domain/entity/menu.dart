@@ -11,6 +11,7 @@ class Menu {
   final Price price;
   final List<String> reviewList;
   final String foodType;
+  num selectedPrice = 0.0;
   Menu({
     required this.coverImage,
     required this.profileImage,
