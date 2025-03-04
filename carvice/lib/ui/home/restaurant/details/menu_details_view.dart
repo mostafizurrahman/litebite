@@ -8,6 +8,7 @@ import '../../../../domain/domain.dart';
 
 abstract class MenuSelectionInterface {
   void onSelected({required Menu menu});
+  void onTapDetails({required Menu menu});
 }
 
 class MenuDetailsView extends StatelessWidget {
@@ -24,7 +25,7 @@ class MenuDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 8),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8),
         decoration: BoxDecoration(
@@ -100,7 +101,7 @@ class MenuDetailsView extends StatelessWidget {
             Material(
               color: Colors.transparent,
               child: InkWell(
-                onTap: () => selectionInterface.onSelected(menu: menu),
+                onTap: () => selectionInterface.onTapDetails(menu: menu),
                 child: Container(
                   width: 60,
                   height: ResDetailsConstant.platterHeight,
@@ -180,7 +181,7 @@ class MenuDetailsView extends StatelessWidget {
         ),
         SizedBox(width: 12),
         Text(
-          'Add To Order',
+          'Place Order',
           style: UITextTheme.ts13WhiteSub,
         ),
       ],

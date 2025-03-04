@@ -16,13 +16,9 @@ import 'menu_details_view.dart';
 class MenuCheckView extends StatefulWidget {
   final MenuSelectionInterface selectionInterface;
   final Menu menu;
-  final bool shouldDelete;
-  final int count;
   MenuCheckView({
     required this.menu,
     required this.selectionInterface,
-    this.shouldDelete = false,
-    this.count = -1,
   });
 
   @override
@@ -77,7 +73,7 @@ class _MenuCheckState extends State<MenuCheckView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text('Total Count : ${widget.count}', style: UITextTheme.tsTitle,),
+              Text('Total Count : ${widget.menu.orderCount}', style: UITextTheme.tsTitle,),
 
 
               Row(
@@ -98,14 +94,16 @@ class _MenuCheckState extends State<MenuCheckView> {
     );
   }
 
+
+
   List<Widget> _widgets() {
-    if (widget.shouldDelete) {
-      final String type = widget.menu.selectedPrice == widget.menu.price.half ? 'Half ' : widget.menu.selectedPrice == widget.menu.price.full ? 'Full' :'Medium';
-      return [Text(
-        '$type \n${widget.menu.selectedPrice}',
-        textAlign: TextAlign.center,
-      )];
-    }
+    // if (widget.shouldDelete) {
+    //   final String type = widget.menu.selectedPrice == widget.menu.price.half ? 'Half ' : widget.menu.selectedPrice == widget.menu.price.full ? 'Full' :'Medium';
+    //   return [Text(
+    //     '$type \n${widget.menu.selectedPrice}',
+    //     textAlign: TextAlign.center,
+    //   )];
+    // }
     final widgets = <Widget>[];
     if (widget.menu.price.half > 0) {
       widgets.add(

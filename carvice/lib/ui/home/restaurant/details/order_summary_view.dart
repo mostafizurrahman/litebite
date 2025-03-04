@@ -6,7 +6,9 @@ import 'package:uisystem/uisystem.dart';
 
 import '../../../../domain/entity/menu.dart';
 import '../../../utility/ui_extension.dart';
+import '../menu/menu_details_page.dart';
 import 'confirm_order_view.dart';
+import 'platter_size_dialog_view.dart';
 import 'restaurant_profile_page.dart';
 
 import 'dart:ui';
@@ -14,15 +16,19 @@ import 'package:flutter/material.dart';
 import '../../../utility/ui_extension.dart';
 
 abstract class MenuUpdateInterface {
-  void onUpdated({required Map<Menu, int> menuMap});
+  void onUpdated({required List<Menu> menuMap});
 }
 
-class OrderSummaryTopView<OMenu> extends StatefulWidget {
-  final Map<Menu, int> menuMap;
+class OrderSummaryTopView extends StatefulWidget {
+  final List<Menu> menuList;
   final MenuUpdateInterface updateInterface;
+  final SelectedPlatterInterface platterInterface;
 
-  OrderSummaryTopView({required OMenu data, required this.updateInterface})
-      : menuMap = data as Map<Menu, int>;
+  OrderSummaryTopView({
+    required this.menuList,
+    required this.updateInterface,
+    required this.platterInterface,
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -33,8 +39,8 @@ class OrderSummaryTopView<OMenu> extends StatefulWidget {
 class _OrderSummaryState extends State<OrderSummaryTopView>
     implements MenuSelectionInterface {
   int count({String type = 'FOOD'}) {
-    return widget.menuMap.entries
-        .where((data) => data.key.foodType.contains(type))
+    return widget.menuList
+        .where((data) => data.foodType.contains(type))
         .length;
   }
 
@@ -60,7 +66,7 @@ class _OrderSummaryState extends State<OrderSummaryTopView>
               Icon(Icons.restaurant),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: Text('All Foods ${widget.menuMap.length}'),
+                child: Text('All Foods ${widget.menuList.length}'),
               )
             ],
           ),
@@ -127,7 +133,7 @@ class _OrderSummaryState extends State<OrderSummaryTopView>
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal, // Set horizontal scrolling
-              itemCount: widget.menuMap.length, // Number of items
+              itemCount: widget.menuList.length, // Number of items
               itemBuilder: _getOrderView,
             ),
           ),
@@ -137,19 +143,15 @@ class _OrderSummaryState extends State<OrderSummaryTopView>
   }
 
   Widget _getOrderView(context, index) {
-    final data = widget.menuMap.entries.toList()[index];
-    data.key.selectedPrice = data.key.price.full; //select this by dialog from user
+    final data = widget.menuList[index];
     return Container(
       width: 400,
       // decoration: ContainerTheme.shadowMenu,
       child: Stack(
         children: [
           MenuCheckView(
-            menu: data.key,
-
+            menu: data,
             selectionInterface: this,
-            count: data.value,
-
           ),
         ],
       ),
@@ -162,15 +164,28 @@ class _OrderSummaryState extends State<OrderSummaryTopView>
 
   @override
   void onSelected({required Menu menu}) {
-    final keyValueMap = widget.menuMap;
-    if (keyValueMap.keys.contains(menu)) {
-      int value = keyValueMap[menu]!;
-      if (value == 1) {
-        keyValueMap.remove(menu);
-      } else {
-        keyValueMap[menu] = --value;
-      }
-      widget.updateInterface.onUpdated(menuMap: keyValueMap);
-    }
+    // final keyValueMap = widget.menuList;
+    // if (widget.menuList.contains(menu)) {
+    //   int value = keyValueMap[menu]!;
+    //   if (value == 1) {
+    //     keyValueMap.remove(menu);
+    //   } else {
+    //     keyValueMap[menu] = --value;
+    //   }
+    //   widget.updateInterface.onUpdated(menuMap: keyValueMap);
+    // }
+  }
+
+  @override
+  void onTapDetails({required Menu menu}) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MenuDetailsPage(
+          menu: menu,
+          selectionInterface: widget.platterInterface,
+        ),
+      ),
+    );
   }
 }

@@ -8,6 +8,7 @@ import 'package:uisystem/theme/text_theme.dart';
 
 import '../../../utility/ui_builder.dart';
 import '../../../widgets/gradient_blur_view.dart';
+import '../menu/menu_details_page.dart';
 import 'order_summary_view.dart';
 import 'restaurant_description_view.dart';
 import 'restaurant_media_view.dart';
@@ -30,7 +31,7 @@ class _RestaurantProfileState extends State<RestaurantProfilePage>
         SelectedPlatterInterface {
   List<Menu> get _menuList => widget.restaurant.menu;
 
-  final _orderController = BehaviorSubject<MOrder>.seeded({});
+  final _orderController = BehaviorSubject<List<Menu>>.seeded([]);
 
   Widget _getOrderStack() {
     return Stack(
@@ -41,10 +42,10 @@ class _RestaurantProfileState extends State<RestaurantProfilePage>
             RestaurantDescriptionView(restaurant: widget.restaurant),
           ],
         ),
-        StreamBuilder<MOrder>(
+        StreamBuilder<List<Menu>>(
           stream: _orderController.stream,
           builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.data.hasValue) {
+            if (snapshot.data?.isNotEmpty ?? false) {
               return Positioned.fill(
                 child: _getBlurOrderView(snapshot.data!),
               );
@@ -82,26 +83,26 @@ class _RestaurantProfileState extends State<RestaurantProfilePage>
     );
   }
 
-  Widget _getBlurOrderView(final MOrder menu) {
-    final view = OrderSummaryTopView<MOrder>(
-      data: menu,
+  Widget _getBlurOrderView(List<Menu> menuList) {
+    final view = OrderSummaryTopView(
+      menuList: menuList,
       updateInterface: this,
+      platterInterface: this,
     );
     return GradientBlurView(child: view);
   }
 
   Widget _getMenuBuilder(ctx, index) {
     final menu = _menuList[index];
-    return  MenuDetailsView(menu: menu, selectionInterface: this);
+    return MenuDetailsView(menu: menu, selectionInterface: this);
   }
 
   @override
   void onSelected({required Menu menu}) {
-    if (menu.price.full > 0 || menu.price.half > 0) {
+    if (menu.price.full > 0 || menu.price.oneTo3 > 0) {
       final child = _getPlatterSelectionView(menu: menu);
       UIBuilder.showFoodModalSheet(context: context, child: child);
-    } else {
-      _onSelected(menu: menu);
+    } else {_setOrder(menu: menu);
     }
   }
 
@@ -112,29 +113,39 @@ class _RestaurantProfileState extends State<RestaurantProfilePage>
     );
   }
 
-  void _onSelected({required Menu menu}) {
-    final keyValueMap = _orderController.valueOrNull;
-    if (keyValueMap != null) {
-      if (keyValueMap.keys.contains(menu)) {
-        int value = keyValueMap[menu]!;
-        keyValueMap[menu] = value + 1;
-        _orderController.sink.add(keyValueMap);
-      } else {
-        final data = {menu: 1};
-        _orderController.sink.add(data);
-      }
-    }
+  String _getMenuID(Menu menu) {
+    return menu.menuID;
   }
 
   @override
-  void onUpdated({required Map<Menu, int> menuMap}) {
+  void onUpdated({required List<Menu> menuMap}) {
     _orderController.sink.add(menuMap);
   }
 
   @override
   void onSelectedPlatter({required Menu menu, required num price}) {
     Navigator.of(context).pop();
-    menu.selectedPrice = price;
-    _onSelected(menu: menu);
+    menu.setPlatter(price: price);
+    _setOrder(menu: menu);
+  }
+
+  void _setOrder({required Menu menu}) {
+    if (_menuList.contains(menu)) {
+      _menuList.add(menu);
+    }
+    _orderController.sink.add(_menuList);
+  }
+
+  @override
+  void onTapDetails({required Menu menu}) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MenuDetailsPage(
+          menu: menu,
+          selectionInterface: this,
+        ),
+      ),
+    );
   }
 }

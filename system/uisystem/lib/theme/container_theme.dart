@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uisystem/theme/constants.dart';
 
 class ContainerTheme {
   static const padding = EdgeInsets.symmetric(horizontal: 16);
@@ -7,6 +8,20 @@ class ContainerTheme {
         color: Colors.white,
         border: Border.all(color: Colors.black.withOpacity(0.5), width: 0.254),
         borderRadius: BorderRadius.all(Radius.circular(5)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withAlpha(100),
+            spreadRadius: 2,
+            blurRadius: 4,
+            // changes position of shadow
+          ),
+        ],
+      );
+
+  static BoxDecoration get shadowLine => BoxDecoration(
+        color: UIConstant.iconSelected,
+        border: Border.all(color: Colors.black.withOpacity(0.5), width: 1.254),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withAlpha(100),

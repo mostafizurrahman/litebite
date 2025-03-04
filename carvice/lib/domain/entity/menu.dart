@@ -11,7 +11,8 @@ class Menu {
   final Price price;
   final List<String> reviewList;
   final String foodType;
-  num selectedPrice = 0.0;
+  Map<num, int> platterMap = {};
+
   Menu({
     required this.coverImage,
     required this.profileImage,
@@ -24,4 +25,22 @@ class Menu {
     required this.isPopular,
     required this.menuName,
   });
+
+  void setPlatter({
+    required num price,
+    final bool shouldRemove = false,
+  }) {
+    if (platterMap.containsKey(price)) {
+      int count = platterMap[price]!;
+      platterMap[price] = shouldRemove ? --count : ++count;
+      if (count == 0)  {
+        platterMap.remove(price);
+      }
+    } else {
+      platterMap.addEntries([MapEntry(price, 1)]);
+    }
+  }
+
+  int get orderCount =>
+      platterMap.values.reduce((sum, element) => sum + element);
 }
