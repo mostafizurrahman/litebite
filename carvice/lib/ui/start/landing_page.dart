@@ -89,7 +89,7 @@ class _LandingState extends State<LandingPage> {
 
       widgets.add(const SizedBox(height: 24));
       widgets.add(
-        Row(
+       const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircularProgressIndicator(),

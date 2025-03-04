@@ -5,7 +5,7 @@ import 'package:uisystem/uisystem.dart';
 class RestaurantView extends StatelessWidget {
   final Restaurant restaurant;
 
-  RestaurantView({required this.restaurant});
+  const RestaurantView({required this.restaurant, super.key});
 
   @override
   Widget build(BuildContext context) {

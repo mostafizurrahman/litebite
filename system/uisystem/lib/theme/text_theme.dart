@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:uisystem/theme/constants.dart';
 
 class UITextTheme {
@@ -57,5 +58,29 @@ class UITextTheme {
     fontSize: 13,
     fontWeight: FontWeight.w500,
     fontStyle: FontStyle.italic,
+  );
+
+  static const ts14White = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+  );
+
+  static const ts12White = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+  );
+  static const ts14Black = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+  );
+
+  static const ts13WhiteSub = TextStyle(
+    fontSize: 13,
+    fontWeight: FontWeight.w500,
+    fontStyle: FontStyle.italic,
+    color: Colors.white,
   );
 }

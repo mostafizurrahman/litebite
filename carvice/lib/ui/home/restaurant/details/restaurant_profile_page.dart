@@ -67,16 +67,13 @@ class _RestaurantProfileState extends State<RestaurantProfilePage>
           Divider(color: Colors.grey, height: 1.4),
           const SizedBox(height: 12),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            padding: const EdgeInsets.only(left: 20, bottom: 8),
             child: Text('Select Food Menu ', style: UITextTheme.tsTitle),
           ),
           Expanded(
-            child: GridView.builder(
-              padding: EdgeInsets.all(8.0),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemCount: _menuList.length,
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              itemCount: _menuList.length, // Replace with your list
               itemBuilder: _getMenuBuilder,
             ),
           ),
@@ -95,7 +92,7 @@ class _RestaurantProfileState extends State<RestaurantProfilePage>
 
   Widget _getMenuBuilder(ctx, index) {
     final menu = _menuList[index];
-    return MenuDetailsView(menu: menu, selectionInterface: this);
+    return  MenuDetailsView(menu: menu, selectionInterface: this);
   }
 
   @override
