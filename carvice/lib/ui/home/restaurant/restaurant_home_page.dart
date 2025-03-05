@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'cubit/restaurant_state.dart';
 import 'widgets/food_filter_view.dart';
 import 'widgets/restaurant_home_view.dart';
-import 'widgets/restaurant_view.dart';
 
 class RestaurantHomePage extends StatefulWidget {
   const RestaurantHomePage();

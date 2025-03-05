@@ -7,7 +7,7 @@ import 'package:uisystem/theme/container_theme.dart';
 import 'package:uisystem/theme/text_theme.dart';
 
 import '../../../../domain/domain.dart';
-import 'details_constant.dart';
+import '../details/details_constant.dart';
 
 abstract class SelectedPlatterInterface {
   void onSelectedPlatter({required Menu menu, required num price});

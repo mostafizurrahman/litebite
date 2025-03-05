@@ -1,33 +1,26 @@
-import 'package:carvice/ui/home/restaurant/details/menu_details_view.dart';
-import 'package:carvice/ui/utility/ui_builder.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uisystem/uisystem.dart';
 
 import '../../../../domain/entity/menu.dart';
-import '../../../utility/ui_extension.dart';
-import '../menu/menu_details_page.dart';
-import 'confirm_order_view.dart';
+import 'menu_details_page.dart';
+import '../details/menu_order_view.dart';
+
 import 'platter_size_dialog_view.dart';
-import 'restaurant_profile_page.dart';
-
-import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '../../../utility/ui_extension.dart';
 
-abstract class MenuUpdateInterface {
-  void onUpdated({required List<Menu> menuMap});
-}
 
-class OrderSummaryTopView extends StatefulWidget {
+
+
+class OrderPreviewListView extends StatefulWidget {
   final List<Menu> menuList;
-  final MenuUpdateInterface updateInterface;
-  final SelectedPlatterInterface platterInterface;
+  final MenuRemoveInterface remover;
 
-  OrderSummaryTopView({
+  OrderPreviewListView({
     required this.menuList,
-    required this.updateInterface,
-    required this.platterInterface,
+    required this.remover,
   });
 
   @override
@@ -36,8 +29,8 @@ class OrderSummaryTopView extends StatefulWidget {
   }
 }
 
-class _OrderSummaryState extends State<OrderSummaryTopView>
-    implements MenuSelectionInterface {
+class _OrderSummaryState extends State<OrderPreviewListView>
+    implements MenuRemoveInterface {
   int count({String type = 'FOOD'}) {
     return widget.menuList
         .where((data) => data.foodType.contains(type))
@@ -149,9 +142,9 @@ class _OrderSummaryState extends State<OrderSummaryTopView>
       // decoration: ContainerTheme.shadowMenu,
       child: Stack(
         children: [
-          MenuCheckView(
+          MenuOrderView(
             menu: data,
-            selectionInterface: this,
+            remover: this,
           ),
         ],
       ),
@@ -162,30 +155,22 @@ class _OrderSummaryState extends State<OrderSummaryTopView>
 
   void _onConfirmOrder() {}
 
-  @override
-  void onSelected({required Menu menu}) {
-    // final keyValueMap = widget.menuList;
-    // if (widget.menuList.contains(menu)) {
-    //   int value = keyValueMap[menu]!;
-    //   if (value == 1) {
-    //     keyValueMap.remove(menu);
-    //   } else {
-    //     keyValueMap[menu] = --value;
-    //   }
-    //   widget.updateInterface.onUpdated(menuMap: keyValueMap);
-    // }
-  }
+
+  // @override
+  // void onTapDetails({required Menu menu}) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => MenuDetailsPage(
+  //         menu: menu,
+  //         selectionInterface: widget.platterInterface,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   @override
-  void onTapDetails({required Menu menu}) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MenuDetailsPage(
-          menu: menu,
-          selectionInterface: widget.platterInterface,
-        ),
-      ),
-    );
+  void onRemove({required Menu menu, required num price}) {
+    widget.remover.onRemove(menu: menu, price: price);
   }
 }

@@ -43,4 +43,33 @@ class Menu {
 
   int get orderCount =>
       platterMap.values.reduce((sum, element) => sum + element);
+
+  // Copy constructor
+  Menu copyWith({
+    String? coverImage,
+    String? profileImage,
+    LocalizedText? menuName,
+    List<String>? foodImages,
+    String? menuID,
+    String? ownerID,
+    bool? isPopular,
+    Price? price,
+    List<String>? reviewList,
+    String? foodType,
+    num? selectedPrice,
+  }) {
+    return Menu(
+      coverImage: coverImage ?? this.coverImage,
+      profileImage: profileImage ?? this.profileImage,
+      menuName: menuName ?? this.menuName,
+      foodImages: foodImages ?? List.from(this.foodImages),
+      menuID: menuID ?? this.menuID,
+      ownerID: ownerID ?? this.ownerID,
+      price: price ?? this.price,
+      reviewList: reviewList ?? List.from(this.reviewList),
+      foodType: foodType ?? this.foodType,
+      isPopular: isPopular ?? this.isPopular,
+    );
+  }
 }
+

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:carvice/ui/home/restaurant/restaurant_home_page.dart';
-import 'package:carvice/ui/home/restaurant/widgets/restaurant_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/services.dart';

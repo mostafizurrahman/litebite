@@ -1,15 +1,12 @@
 import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:uisystem/button/tap_widget.dart';
 import 'package:uisystem/theme/constants.dart';
 import 'package:uisystem/theme/container_theme.dart';
 import 'package:uisystem/theme/text_theme.dart';
-
 import '../../../../domain/domain.dart';
-import '../details/menu_details_view.dart';
-import '../details/platter_size_dialog_view.dart';
+import 'platter_size_dialog_view.dart';
 
 class MenuDetailsPage extends StatefulWidget {
   final SelectedPlatterInterface selectionInterface;
@@ -119,6 +116,8 @@ class _MenuDetailsState extends State<MenuDetailsPage> {
   Widget _buildPriceTile(String label, num price, num selectedPrice) {
     return TapWidget(
       width: 90,
+      borderWidth: 1.4,
+      borderColor: UIConstant.primary,
       onTapWidget: () => _price.sink.add(price),
       child: Column(
         children: [

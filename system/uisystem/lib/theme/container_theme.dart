@@ -52,13 +52,13 @@ class ContainerTheme {
           end: Alignment.topCenter,
           colors: [
             Colors.white.withOpacity(1),   // Fully opaque (255)
-            Colors.white.withOpacity(0.9), // 230
-            Colors.white.withOpacity(0.8), // 204
-            Colors.white.withOpacity(0.7), // 179
-            Colors.white.withOpacity(0.6), // 153
-            Colors.white.withOpacity(0.5), // 128
-            Colors.white.withOpacity(0.3), // 77
-            Colors.white.withOpacity(0),
+            Colors.white.withOpacity(0.96), // 230
+            Colors.white.withOpacity(0.9), // 204
+            Colors.white.withOpacity(0.85), // 179
+            Colors.white.withOpacity(0.8), // 153
+            Colors.white.withOpacity(0.75), // 128
+            Colors.white.withOpacity(0.7), // 77
+            Colors.white.withOpacity(0.65),
             // Colors.white.withOpacity(0.5),   // Fully opaque (255)
             // Colors.white.withOpacity(0.45), // 230
             // Colors.white.withOpacity(0.4), // 204

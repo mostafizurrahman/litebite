@@ -1,6 +1,6 @@
 import 'package:carvice/domain/domain.dart';
-import 'package:carvice/ui/home/restaurant/details/menu_details_view.dart';
-import 'package:carvice/ui/home/restaurant/details/platter_size_dialog_view.dart';
+import 'package:carvice/ui/home/restaurant/menu/menu_details_view.dart';
+import 'package:carvice/ui/home/restaurant/menu/platter_size_dialog_view.dart';
 import 'package:carvice/ui/utility/ui_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
@@ -9,7 +9,8 @@ import 'package:uisystem/theme/text_theme.dart';
 import '../../../utility/ui_builder.dart';
 import '../../../widgets/gradient_blur_view.dart';
 import '../menu/menu_details_page.dart';
-import 'order_summary_view.dart';
+import '../menu/order_preview_list_view.dart';
+import 'menu_order_view.dart';
 import 'restaurant_description_view.dart';
 import 'restaurant_media_view.dart';
 
@@ -27,9 +28,19 @@ class RestaurantProfilePage extends StatefulWidget {
 class _RestaurantProfileState extends State<RestaurantProfilePage>
     implements
         MenuSelectionInterface,
-        MenuUpdateInterface,
+        MenuRemoveInterface,
         SelectedPlatterInterface {
-  List<Menu> get _menuList => widget.restaurant.menu;
+  final List<Menu> _menuList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    widget.restaurant.menu.forEach(_set);
+  }
+
+  void _set(Menu menu) {
+    _menuList.add(menu.copyWith());
+  }
 
   final _orderController = BehaviorSubject<List<Menu>>.seeded([]);
 
@@ -84,10 +95,9 @@ class _RestaurantProfileState extends State<RestaurantProfilePage>
   }
 
   Widget _getBlurOrderView(List<Menu> menuList) {
-    final view = OrderSummaryTopView(
+    final view = OrderPreviewListView(
       menuList: menuList,
-      updateInterface: this,
-      platterInterface: this,
+      remover: this,
     );
     return GradientBlurView(child: view);
   }
@@ -102,7 +112,8 @@ class _RestaurantProfileState extends State<RestaurantProfilePage>
     if (menu.price.full > 0 || menu.price.oneTo3 > 0) {
       final child = _getPlatterSelectionView(menu: menu);
       UIBuilder.showFoodModalSheet(context: context, child: child);
-    } else {_setOrder(menu: menu);
+    } else {
+      _setOrder(menu: menu);
     }
   }
 
@@ -113,13 +124,14 @@ class _RestaurantProfileState extends State<RestaurantProfilePage>
     );
   }
 
-  String _getMenuID(Menu menu) {
-    return menu.menuID;
-  }
-
   @override
-  void onUpdated({required List<Menu> menuMap}) {
-    _orderController.sink.add(menuMap);
+  void onRemove({required Menu menu, required num price}) {
+    // final list = _orderController.valueOrNull ?? [];
+    // if (list.contains(menu)) {
+    //   if
+    //   list.remove(menu);
+    // }
+    // _orderController.sink.add(list);
   }
 
   @override
@@ -130,10 +142,11 @@ class _RestaurantProfileState extends State<RestaurantProfilePage>
   }
 
   void _setOrder({required Menu menu}) {
-    if (_menuList.contains(menu)) {
-      _menuList.add(menu);
+    final orderedMenuList = _orderController.valueOrNull ?? [];
+    if (!orderedMenuList.contains(menu)) {
+      orderedMenuList.add(menu);
     }
-    _orderController.sink.add(_menuList);
+    _orderController.sink.add(orderedMenuList);
   }
 
   @override

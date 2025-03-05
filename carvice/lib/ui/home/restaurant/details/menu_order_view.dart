@@ -8,17 +8,19 @@ import 'package:uisystem/theme/constants.dart';
 import 'package:uisystem/uisystem.dart';
 
 import '../../../../domain/domain.dart';
-import 'menu_details_view.dart';
+import '../menu/menu_details_view.dart';
 
 
+abstract class MenuRemoveInterface {
+  void onRemove({required Menu menu, required num price});
+}
 
-
-class MenuCheckView extends StatefulWidget {
-  final MenuSelectionInterface selectionInterface;
+class MenuOrderView extends StatefulWidget {
+  final MenuRemoveInterface remover;
   final Menu menu;
-  MenuCheckView({
+  MenuOrderView({
     required this.menu,
-    required this.selectionInterface,
+    required this.remover,
   });
 
   @override
@@ -27,7 +29,7 @@ class MenuCheckView extends StatefulWidget {
   }
 }
 
-class _MenuCheckState extends State<MenuCheckView> {
+class _MenuCheckState extends State<MenuOrderView> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -49,7 +51,7 @@ class _MenuCheckState extends State<MenuCheckView> {
                   child: InkWell(
                     splashColor: UIConstant.amber.withOpacity(0.6), // Optional ripple effect color
                     highlightColor: Colors.white.withOpacity(0.1),
-                    onTap: () => toggleMenuSelection(widget.menu),
+                    onTap: () => removeMenu(widget.menu),
                     child: SizedBox.expand(),
                   ),
                 ),
@@ -134,8 +136,8 @@ class _MenuCheckState extends State<MenuCheckView> {
     return widgets;
   }
 
-  void toggleMenuSelection(Menu menu) {
-    widget.selectionInterface.onSelected(menu: menu);
+  void removeMenu(Menu menu) {
+    // widget.selectionInterface.onSelected(menu: menu);
     // setState(() {
     //   if (selectedMenus.contains(menuName)) {
     //     selectedMenus.remove(menuName);

@@ -176,7 +176,7 @@ class MenuDetailsView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(
-          Icons.add_circle,
+          Icons.fastfood_rounded,
           color: Colors.white,
         ),
         SizedBox(width: 12),
