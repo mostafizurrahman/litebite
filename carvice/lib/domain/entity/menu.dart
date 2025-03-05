@@ -26,7 +26,7 @@ class Menu {
     required this.menuName,
   });
 
-  void setPlatter({
+  bool setPlatter({
     required num price,
     final bool shouldRemove = false,
   }) {
@@ -36,14 +36,24 @@ class Menu {
       if (count == 0)  {
         platterMap.remove(price);
       }
-    } else {
+    } else if (!shouldRemove){
       platterMap.addEntries([MapEntry(price, 1)]);
     }
+    return platterMap.isEmpty;
   }
 
   int get orderCount =>
       platterMap.values.reduce((sum, element) => sum + element);
 
+  int get regularCount => platterMap[price.half] ?? 0;
+
+  int get fullCount => platterMap[price.full] ?? 0;
+
+  int get one3Count => platterMap[price.oneTo3] ?? 0;
+
+  void clear() {
+    platterMap.clear();
+  }
   // Copy constructor
   Menu copyWith({
     String? coverImage,

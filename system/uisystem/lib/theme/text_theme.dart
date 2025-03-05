@@ -44,6 +44,12 @@ class UITextTheme {
     fontSize: 12,
     fontWeight: FontWeight.w300,
   );
+  static const italic12Bold = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+      fontStyle: FontStyle.italic,
+    color: Colors.black87
+  );
   static const tsTitleL = TextStyle(
     fontSize: 26,
     fontWeight: FontWeight.w600,

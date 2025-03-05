@@ -1,15 +1,11 @@
-
-
-
+import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carvice/ui/utility/ui_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:uisystem/theme/constants.dart';
 import 'package:uisystem/uisystem.dart';
 
 import '../../../../domain/domain.dart';
-import '../menu/menu_details_view.dart';
-
+import 'details_constant.dart';
 
 abstract class MenuRemoveInterface {
   void onRemove({required Menu menu, required num price});
@@ -18,6 +14,7 @@ abstract class MenuRemoveInterface {
 class MenuOrderView extends StatefulWidget {
   final MenuRemoveInterface remover;
   final Menu menu;
+
   MenuOrderView({
     required this.menu,
     required this.remover,
@@ -30,30 +27,79 @@ class MenuOrderView extends StatefulWidget {
 }
 
 class _MenuCheckState extends State<MenuOrderView> {
+  final _removeBuilder = StreamController<bool>();
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Container(
-        decoration:  ContainerTheme.shadowMenu,
-
-        width: width * 0.5,
+        decoration: ContainerTheme.shadowMenu,
+        width: ResDetailsConstant.removerWidth,
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(6)),
           child: Stack(
             children: [
-              CachedNetworkImage(imageUrl: widget.menu.profileImage, fit: BoxFit.cover,),
-              _getInfoWidget(),
-              Material(
-                color: Colors.transparent,
-                child: Ink(
-                  child: InkWell(
-                    splashColor: UIConstant.amber.withOpacity(0.6), // Optional ripple effect color
-                    highlightColor: Colors.white.withOpacity(0.1),
-                    onTap: () => removeMenu(widget.menu),
-                    child: SizedBox.expand(),
+              CachedNetworkImage(
+                imageUrl: widget.menu.profileImage,
+                fit: BoxFit.cover,
+                width: ResDetailsConstant.removerWidth,
+                height: ResDetailsConstant.removerWidth,
+              ),
+              StreamBuilder<Object>(
+                  stream: _removeBuilder.stream,
+                  initialData: false,
+                  builder: (context, snapshot) {
+                    return _getInfoWidget();
+                  }),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _getInfoWidget() {
+    final half = widget.menu.regularCount;
+    final full = widget.menu.fullCount;
+    final one3 = widget.menu.one3Count;
+    return Positioned.fill(
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+        child: Container(
+          decoration: ContainerTheme.linearDecoration,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Row(
+                children: [
+                  const SizedBox(width: 12),
+                  Text(
+                    'Total : ${widget.menu.orderCount}',
+                    style: UITextTheme.tsTitle,
                   ),
+                  Expanded(child: const SizedBox()),
+                  _getPlatterRow(_onRemoveMenu, '', iconData: Icons.cancel),
+                ],
+              ),
+              Divider(
+                height: 3,
+                color: UIConstant.iconSelected,
+              ),
+              Expanded(child: const SizedBox()),
+              if (half > 0) _getPlatterRow(_onRemoveHalf, 'REGULAR : $half'),
+              if (full > 0) _getPlatterRow(_onRemoveFull, 'FULL : $full'),
+              if (one3 > 0) _getPlatterRow(_onRemove3_1, '1:3 Person : $one3'),
+              Divider(height: 1),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: Text(
+                  widget.menu.menuName.txt,
+                  style:
+                      UITextTheme.ts16Colored.copyWith(color: Colors.blueGrey),
+                  maxLines: 1, // Limits to one line
+                  overflow: TextOverflow.ellipsis, // Adds "..."
                 ),
               ),
             ],
@@ -63,77 +109,71 @@ class _MenuCheckState extends State<MenuOrderView> {
     );
   }
 
-  Widget _getInfoWidget() {
-    return  Positioned.fill(
+  Widget _getPlatterRow(VoidCallback onRemoveItem, String text,
+      {IconData iconData = Icons.remove_circle}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(text, style: UITextTheme.italic12Bold),
+          const SizedBox(width: 8),
+          _getPlusMinus(iconData, onRemoveItem),
+        ],
+      ),
+    );
+  }
 
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-        child: Container(
-          height: 70,
-          decoration: ContainerTheme.linearDecoration,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text('Total Count : ${widget.menu.orderCount}', style: UITextTheme.tsTitle,),
+  void _onRemoveHalf() {
+    _onUpdateMenu(regular: widget.menu.price.half);
+  }
 
+  void _onRemoveMenu() {
+    widget.remover.onRemove(menu: widget.menu, price: -1);
+  }
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: _widgets(),
-              ),
-              Divider(height: 1),
-              Text(
-                widget.menu.menuName.txt,
-                style: UITextTheme.selected14Title,
-                maxLines: 1, // Limits to one line
-                overflow: TextOverflow.ellipsis, // Adds "..."
-              ),
-            ],
+  void _onRemove3_1() {
+    _onUpdateMenu(regular: widget.menu.price.oneTo3);
+  }
+
+  void _onRemoveFull() {
+    _onUpdateMenu(regular: widget.menu.price.full);
+  }
+
+  void _onUpdateMenu({required final num regular}) {
+    final remove = widget.menu.setPlatter(price: regular, shouldRemove: true);
+    if (remove) {
+      widget.remover.onRemove(menu: widget.menu, price: regular);
+    } else {
+      _removeBuilder.sink.add(true);
+    }
+  }
+
+  Widget _getPlusMinus(final IconData iconData, VoidCallback onTapIcon) {
+    return ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(199)),
+      child: Material(
+        child: Ink(
+          color: Colors.brown[100],
+          height: 35,
+          width: 35,
+          child: InkWell(
+            splashColor: UIConstant.amber,
+            onTap: onTapIcon,
+            child: Icon(
+              iconData,
+              color: UIConstant.primary,
+            ),
           ),
         ),
       ),
     );
   }
 
-
-
-  List<Widget> _widgets() {
-    // if (widget.shouldDelete) {
-    //   final String type = widget.menu.selectedPrice == widget.menu.price.half ? 'Half ' : widget.menu.selectedPrice == widget.menu.price.full ? 'Full' :'Medium';
-    //   return [Text(
-    //     '$type \n${widget.menu.selectedPrice}',
-    //     textAlign: TextAlign.center,
-    //   )];
-    // }
-    final widgets = <Widget>[];
-    if (widget.menu.price.half > 0) {
-      widgets.add(
-        Text(
-          'Small\n${widget.menu.price.half}',
-          textAlign: TextAlign.center,
-        ),
-      );
-    }
-
-    if (widget.menu.price.full > 0) {
-      widgets.add(
-        Text(
-          'Full\n${widget.menu.price.full}',
-          textAlign: TextAlign.center,
-        ),
-      );
-    }
-
-    if (widget.menu.price.oneTo3 > 0) {
-      widgets.add(
-        Text(
-          '1:3\n${widget.menu.price.oneTo3}',
-          textAlign: TextAlign.center,
-        ),
-      );
-    }
-    return widgets;
+  @override
+  void dispose() {
+    _removeBuilder.close();
+    super.dispose();
   }
 
   void removeMenu(Menu menu) {

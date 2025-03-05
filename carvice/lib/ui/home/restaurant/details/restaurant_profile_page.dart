@@ -11,6 +11,7 @@ import '../../../widgets/gradient_blur_view.dart';
 import '../menu/menu_details_page.dart';
 import '../menu/order_preview_list_view.dart';
 import 'menu_order_view.dart';
+import 'order_remover_view.dart';
 import 'restaurant_description_view.dart';
 import 'restaurant_media_view.dart';
 
@@ -95,10 +96,7 @@ class _RestaurantProfileState extends State<RestaurantProfilePage>
   }
 
   Widget _getBlurOrderView(List<Menu> menuList) {
-    final view = OrderPreviewListView(
-      menuList: menuList,
-      remover: this,
-    );
+    final view = OrderRemoverView(remover: this, orderList: menuList);
     return GradientBlurView(child: view);
   }
 
@@ -126,12 +124,12 @@ class _RestaurantProfileState extends State<RestaurantProfilePage>
 
   @override
   void onRemove({required Menu menu, required num price}) {
-    // final list = _orderController.valueOrNull ?? [];
-    // if (list.contains(menu)) {
-    //   if
-    //   list.remove(menu);
-    // }
-    // _orderController.sink.add(list);
+    final list = _orderController.valueOrNull ?? [];
+    if (list.contains(menu)) {
+      menu.clear();
+      list.remove(menu);
+    }
+    _orderController.sink.add(list);
   }
 
   @override

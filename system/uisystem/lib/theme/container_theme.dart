@@ -52,7 +52,7 @@ class ContainerTheme {
           end: Alignment.topCenter,
           colors: [
             Colors.white.withOpacity(1),   // Fully opaque (255)
-            Colors.white.withOpacity(0.96), // 230
+            Colors.white.withOpacity(0.95), // 230
             Colors.white.withOpacity(0.9), // 204
             Colors.white.withOpacity(0.85), // 179
             Colors.white.withOpacity(0.8), // 153
