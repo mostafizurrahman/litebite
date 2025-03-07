@@ -120,7 +120,7 @@ class _LandingState extends State<LandingPage> {
       const SizedBox(height: 24),
       Text(title, style: UITextTheme.tsTitle),
       const SizedBox(height: 16),
-      Text(subtitle, style: UITextTheme.tsNormal),
+      Text(subtitle, style: UITextTheme.ts14Normal),
     ];
   }
 

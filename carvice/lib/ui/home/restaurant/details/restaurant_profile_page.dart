@@ -1,15 +1,16 @@
 import 'package:carvice/domain/domain.dart';
+import 'package:carvice/ui/home/order/order_home_chek_page.dart';
 import 'package:carvice/ui/home/restaurant/menu/menu_details_view.dart';
 import 'package:carvice/ui/home/restaurant/menu/platter_size_dialog_view.dart';
-import 'package:carvice/ui/utility/ui_extension.dart';
+import 'package:carvice/ui/home/restaurant/widgets/order_confirmation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uisystem/theme/text_theme.dart';
+import 'package:uisystem/uisystem.dart';
 
 import '../../../utility/ui_builder.dart';
 import '../../../widgets/gradient_blur_view.dart';
 import '../menu/menu_details_page.dart';
-import '../menu/order_preview_list_view.dart';
 import 'menu_order_view.dart';
 import 'order_remover_view.dart';
 import 'restaurant_description_view.dart';
@@ -73,26 +74,103 @@ class _RestaurantProfileState extends State<RestaurantProfilePage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
         children: [
-          _getOrderStack(),
-          Divider(color: Colors.grey, height: 1.4),
-          const SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, bottom: 8),
-            child: Text('Select Food Menu ', style: UITextTheme.tsTitle),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _getOrderStack(),
+              Divider(color: Colors.grey, height: 1.4),
+              const SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, bottom: 8),
+                child: Text('Select Food Menu ', style: UITextTheme.tsTitle),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: _menuList.length, // Replace with your list
+                  itemBuilder: _getMenuBuilder,
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: _menuList.length, // Replace with your list
-              itemBuilder: _getMenuBuilder,
+          Align(
+            alignment: Alignment.topRight,
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                  child: Material(
+                    color: UIConstant.titleColor,
+                    child: Ink(
+                      width: 70,
+                      child: InkWell(
+                        splashColor: UIConstant.splashColor,
+                        onTap: _onTapIcon,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Text(
+                                'EXIT',
+                                style: UITextTheme.ts14WBold,
+                              ),
+                            ),
+                            Icon(
+                              Icons.cancel,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                // child: UIBuilder.getPlusMinus(
+                //   Icons.cancel,
+                //   _onTapIcon,
+                //   dimension: 45,
+                //   iconSize: 35,
+                // ),
+              ),
             ),
           ),
         ],
       ),
+      floatingActionButton: StreamBuilder(
+        stream: _orderController.stream,
+        builder: _getMenuCheckoutView,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  void _onTapIcon() {
+    Navigator.of(context).pop();
+  }
+
+  Widget _getMenuCheckoutView(
+      final BuildContext ctx, final AsyncSnapshot<List<Menu>> snap) {
+    if (snap.data.isNonNullEmpty) {
+      return OrderConfirmationButton(
+        width: width,
+        menuList: snap.data!,
+        onNavigate: _navigateToSummary,
+      );
+    }
+    return const SizedBox();
+  }
+
+  void _navigateToSummary() {
+    final route = MaterialPageRoute(builder: _getOrderCheckingPage);
+    Navigator.of(context).push(route);
+  }
+
+  Widget _getOrderCheckingPage(BuildContext ctx) {
+    final list = _orderController.valueOrNull ?? <Menu>[];
+    return OrderHomeCheckPage(orderList: list);
   }
 
   Widget _getBlurOrderView(List<Menu> menuList) {

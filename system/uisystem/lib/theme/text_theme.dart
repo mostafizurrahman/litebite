@@ -55,9 +55,13 @@ class UITextTheme {
     fontWeight: FontWeight.w600,
   );
 
-  static const tsNormal = TextStyle(
+  static const ts14Normal = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,
+  );
+  static const ts14BBold = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
   );
 
   static const ts13Subtitle = TextStyle(
@@ -77,10 +81,10 @@ class UITextTheme {
     fontWeight: FontWeight.w500,
     color: Colors.white,
   );
-  static const ts14Black = TextStyle(
+  static const ts14WBold = TextStyle(
     fontSize: 14,
-    fontWeight: FontWeight.w500,
-    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
   );
 
   static const ts13WhiteSub = TextStyle(

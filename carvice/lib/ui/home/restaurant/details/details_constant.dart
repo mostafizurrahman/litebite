@@ -6,4 +6,5 @@ class ResDetailsConstant {
   static const int descItemCount = 3;
   static const double platterHeight = 128;
   static const double removerWidth = 170;
+  static const String drink = 'DRINK';
 }

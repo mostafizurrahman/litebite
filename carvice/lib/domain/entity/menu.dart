@@ -1,3 +1,4 @@
+import '../../ui/home/restaurant/details/details_constant.dart';
 import '../domain.dart';
 
 class Menu {
@@ -12,7 +13,7 @@ class Menu {
   final List<String> reviewList;
   final String foodType;
   Map<num, int> platterMap = {};
-
+  bool get isFood => !this.foodType.contains(ResDetailsConstant.drink);
   Menu({
     required this.coverImage,
     required this.profileImage,

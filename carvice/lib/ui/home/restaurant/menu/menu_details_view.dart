@@ -66,7 +66,7 @@ class MenuDetailsView extends StatelessWidget {
                   children: [
                     Text(
                       menu.menuName.txt,
-                      style: UITextTheme.ts14Black,
+                      style: UITextTheme.ts14BBold,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,

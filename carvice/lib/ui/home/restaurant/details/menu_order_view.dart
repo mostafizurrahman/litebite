@@ -5,6 +5,7 @@ import 'package:uisystem/theme/constants.dart';
 import 'package:uisystem/uisystem.dart';
 
 import '../../../../domain/domain.dart';
+import '../../../utility/ui_builder.dart';
 import 'details_constant.dart';
 
 abstract class MenuRemoveInterface {
@@ -118,7 +119,7 @@ class _MenuCheckState extends State<MenuOrderView> {
         children: [
           Text(text, style: UITextTheme.italic12Bold),
           const SizedBox(width: 8),
-          _getPlusMinus(iconData, onRemoveItem),
+          UIBuilder.getPlusMinus(iconData, onRemoveItem),
         ],
       ),
     );
@@ -149,41 +150,11 @@ class _MenuCheckState extends State<MenuOrderView> {
     }
   }
 
-  Widget _getPlusMinus(final IconData iconData, VoidCallback onTapIcon) {
-    return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(199)),
-      child: Material(
-        child: Ink(
-          color: Colors.brown[100],
-          height: 35,
-          width: 35,
-          child: InkWell(
-            splashColor: UIConstant.amber,
-            onTap: onTapIcon,
-            child: Icon(
-              iconData,
-              color: UIConstant.primary,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+
 
   @override
   void dispose() {
     _removeBuilder.close();
     super.dispose();
-  }
-
-  void removeMenu(Menu menu) {
-    // widget.selectionInterface.onSelected(menu: menu);
-    // setState(() {
-    //   if (selectedMenus.contains(menuName)) {
-    //     selectedMenus.remove(menuName);
-    //   } else {
-    //     selectedMenus.add(menuName);
-    //   }
-    // });
   }
 }
