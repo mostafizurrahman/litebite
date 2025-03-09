@@ -1,6 +1,8 @@
-part of 'models.dart';
 
-@JsonSerializable(createToJson: false)
+
+part of '../models.dart';
+
+@JsonSerializable(createToJson: true)
 class OrderMenuResponse extends BaseResponse<OrderMenu> {
   @JsonKey(defaultValue: 0)
   final num discount;
@@ -40,7 +42,7 @@ class OrderMenuResponse extends BaseResponse<OrderMenu> {
       _$OrderMenuResponseFromJson(json);
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: true)
 class TableDataResponse extends BaseResponse<TableData> {
   @JsonKey(name: 'table_id')
   final String tableID;
@@ -57,16 +59,16 @@ class TableDataResponse extends BaseResponse<TableData> {
 
   @override
   TableData toEntity() => TableData(
-        tableID: tableID,
-        tableNo: tableNo,
-        waiterID: waiterID,
-      );
+    tableID: tableID,
+    tableNo: tableNo,
+    waiterID: waiterID,
+  );
 
   factory TableDataResponse.fromJson(Map<String, dynamic> json) =>
       _$TableDataResponseFromJson(json);
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: true)
 class OrderResponse extends BaseResponse<FoodOrder> {
   @JsonKey(name: 'order_id')
   final String orderID;
@@ -111,7 +113,7 @@ class OrderResponse extends BaseResponse<FoodOrder> {
       _$OrderResponseFromJson(json);
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: true)
 class OrderInfoResponse extends BaseResponse<OrderInfo> {
   @JsonKey(name: 'order_image')
   final String orderImage;
@@ -137,4 +139,53 @@ class OrderInfoResponse extends BaseResponse<OrderInfo> {
 
   factory OrderInfoResponse.fromJson(Map<String, dynamic> json) =>
       _$OrderInfoResponseFromJson(json);
+}
+
+@JsonSerializable(createToJson: true)
+class RestaurantOrderResponse extends BaseResponse<RestaurantOrder> {
+
+  @JsonKey(name: 'is_processed')
+  final bool isProcessed;
+  final List<String> menus;
+  @JsonKey(name: 'order_id')
+  final String orderID;
+  @TimestampConverter()
+  @JsonKey(name: 'order_time')
+  final DateTime orderTime;
+  final List<String> tables;
+  final List<String> waiters;
+  @JsonKey(name: 'customer_contact')
+  final String customerNumber;
+  @JsonKey(name: 'user_id')
+  final String userID;
+  @JsonKey(name: 'restaurant_contact')
+  final String restaurantNumber;
+
+
+  factory RestaurantOrderResponse.fromJson(Map<String, dynamic> json) => _$RestaurantOrderResponseFromJson(json);
+
+  RestaurantOrderResponse({
+    required this.isProcessed,
+    required this.menus,
+    required this.orderID,
+    required this.orderTime,
+    required this.tables,
+    required this.waiters,
+    required this.customerNumber,
+    required this.restaurantNumber,
+    required this.userID
+  });
+
+  @override
+  RestaurantOrder toEntity() => RestaurantOrder(
+    tables: tables,
+    waiters: waiters,
+    orderTime: orderTime,
+    orderID: orderID,
+    isProcessed: isProcessed,
+    menus: menus,
+    restaurantNumber: restaurantNumber,
+    customerNumber: customerNumber,
+    userID: userID,
+  );
 }

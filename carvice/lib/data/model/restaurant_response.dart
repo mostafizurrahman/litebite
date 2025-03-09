@@ -1,6 +1,6 @@
 part of 'models.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: true)
 class TimingResponse extends BaseResponse<Timing> {
   @JsonKey(name: 'open')
   final String openTime;
@@ -21,7 +21,7 @@ class TimingResponse extends BaseResponse<Timing> {
   }
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: true)
 class WaiterResponse extends BaseResponse<Waiter> {
   final String id;
   final List<String> tables;
@@ -42,7 +42,7 @@ class WaiterResponse extends BaseResponse<Waiter> {
   }
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: true)
 class RestaurantResponse extends BaseResponse<Restaurant> {
   @JsonKey(name: 'cover_image')
   final String? coverImage;

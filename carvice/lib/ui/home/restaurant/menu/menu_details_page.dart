@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carvice/ui/home/bottom/bottom_tab_view.dart';
+import 'package:carvice/ui/utility/ui_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:uisystem/button/tap_widget.dart';
-import 'package:uisystem/theme/constants.dart';
-import 'package:uisystem/theme/container_theme.dart';
-import 'package:uisystem/theme/text_theme.dart';
+import 'package:uisystem/uisystem.dart';
 import '../../../../domain/domain.dart';
 import 'platter_size_dialog_view.dart';
 
@@ -159,11 +158,7 @@ class _MenuDetailsState extends State<MenuDetailsPage> {
       stream: _price.stream,
       initialData: widget.menu.price.half,
       builder: (context, snapshot) {
-        final text = snapshot.data == widget.menu.price.half
-            ? 'Regular'
-            : snapshot.data == widget.menu.price.full
-                ? 'Full'
-                : '3 Persons';
+        final text = widget.menu.getPriceName(price: snapshot.data ?? 0 );
         return ElevatedButton.icon(
           onPressed: () => widget.selectionInterface.onSelectedPlatter(
             price: snapshot.data ?? widget.menu.price.half,

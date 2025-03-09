@@ -1,10 +1,27 @@
-
-
-
 part of 'models.dart';
 
-@JsonSerializable(createToJson: false)
+class DiscountConverter implements JsonConverter<DiscountType, String> {
+  const DiscountConverter();
+
+  @override
+  DiscountType fromJson(String json) {
+    return DiscountType.values.firstWhere(
+      (e) => e.toString().split('.').last == json,
+      orElse: () => DiscountType.noDiscount,
+    );
+  }
+
+  @override
+  String toJson(DiscountType object) => object.toString().split('.').last;
+}
+
+@JsonSerializable(createToJson: true)
 class MenuResponse extends BaseResponse<Menu> {
+  @JsonKey(defaultValue: 0)
+  final num discount;
+  @DiscountConverter()
+  @JsonKey(name: 'discount_type', defaultValue: DiscountType.noDiscount)
+  final DiscountType discountType;
   @JsonKey(name: 'cover_image', defaultValue: '')
   final String coverImage;
   @JsonKey(name: 'profile_image', defaultValue: '')
@@ -22,7 +39,10 @@ class MenuResponse extends BaseResponse<Menu> {
   @JsonKey(name: 'type', defaultValue: '')
   final String foodType;
   final LocalizedResponse description;
+
   MenuResponse({
+    required this.discountType,
+    required this.discount,
     required this.coverImage,
     required this.profileImage,
     required this.foodImages,
@@ -34,7 +54,9 @@ class MenuResponse extends BaseResponse<Menu> {
     required this.isPopular,
     required this.description,
   });
-  factory MenuResponse.fromJson(Map<String, dynamic> json) => _$MenuResponseFromJson(json);
+
+  factory MenuResponse.fromJson(Map<String, dynamic> json) =>
+      _$MenuResponseFromJson(json);
 
   @override
   Menu toEntity() {
@@ -49,6 +71,8 @@ class MenuResponse extends BaseResponse<Menu> {
       foodType: foodType,
       isPopular: isPopular,
       menuName: description.toEntity(),
+      discount: discount,
+      discountType: discountType,
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:carvice/ui/home/bottom/bottom_tab_view.dart';
 import 'package:carvice/ui/utility/ui_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:uisystem/theme/text_theme.dart';
 
 import '../../../domain/domain.dart';
 
@@ -36,14 +37,20 @@ class _OrderHomeCheckPageState extends State<OrderHomeCheckPage> {
         ),
       ),
       body: ListView.separated(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(horizontal: 12),
         itemCount: widget.orderList.length,
-        separatorBuilder: (_, __) => Divider(),
+        separatorBuilder: (_, __) => Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Divider(),
+        ),
         itemBuilder: (context, index) {
           final menu = widget.orderList[index];
-          return _buildMenuItem(menu);
+          return ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(6)),
+              child: _buildMenuItem(menu));
         },
       ),
+      bottomNavigationBar: StreamBuilder(stream: stream, builder: builder),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
         label:
@@ -59,11 +66,11 @@ class _OrderHomeCheckPageState extends State<OrderHomeCheckPage> {
       children: [
         CachedNetworkImage(
           imageUrl: menu.profileImage,
-          width: 100,
-          height: 100,
+          width: 120,
+          height: 140,
           fit: BoxFit.cover,
         ),
-        SizedBox(width: 16),
+        SizedBox(width: 12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,77 +87,46 @@ class _OrderHomeCheckPageState extends State<OrderHomeCheckPage> {
   }
 
   Widget _buildPlatterRow(Menu menu, num price, int count) {
-    return count > 0
-        ? Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Platter (\$${price.toStringAsFixed(2)})"),
-              Row(
-                children: [
-                  _buildActionButton(menu, price, false),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text("$count", style: TextStyle(fontSize: 16)),
+    if (count > 0) {
+      final text = menu.getPriceName(price: price);
+      return Padding(
+        padding: const EdgeInsets.only(top: 4.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("$text (${price.toStringAsFixed(2)})", style: UITextTheme.ts14BBold,),
+            Row(
+              children: [
+                _buildActionButton(menu, price, false),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: SizedBox(
+                    child: Center(
+                      child: Text(
+                        "$count",
+                        style: UITextTheme.ts14BBold.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    width: 35,
                   ),
-                  _buildActionButton(menu, price, true),
-                ],
-              ),
-            ],
-          )
-        : SizedBox.shrink();
+                ),
+                _buildActionButton(menu, price, true),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+    return SizedBox.shrink();
   }
 
   Widget _buildActionButton(Menu menu, num price, bool isAdding) {
-    return InkWell(
-      onTap: () => _updateOrder(menu, price, isAdding),
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        padding: EdgeInsets.all(6),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: isAdding ? Colors.green : Colors.red,
-        ),
-        child: Icon(
-          isAdding ? Icons.add : Icons.remove,
-          color: Colors.white,
-        ),
-      ),
+    final iconData = isAdding ? Icons.add : Icons.remove;
+    return UIBuilder.getPlusMinus(
+      iconData,
+      () => _updateOrder(menu, price, isAdding),
     );
   }
 }
-
-//
-// class OrderHomeCheckPage extends StatefulWidget {
-//   final List<Menu> orderMenuList;
-//   @override
-//   State<StatefulWidget> createState() {
-//     return _OrderHomePageState();
-//   }
-// }
-//
-// class _OrderHomePageState extends State<OrderHomeCheckPage> {
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text('Order Summary'),),
-//       body: SingleChildScrollView(
-//         child: Column(
-//           children: [
-//
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// class _MenuInfoView extends StatelessWidget {
-//   final Menu menu;
-//   const _MenuInfoView({required this.menu, super.key});
-//   @override
-//   Widget build(BuildContext context) {
-//     // TODO: implement build
-//     throw UnimplementedError();
-//   }
-// }

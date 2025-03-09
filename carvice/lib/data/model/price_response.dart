@@ -1,7 +1,7 @@
 
 part of 'models.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: true)
 class PriceResponse extends BaseResponse<Price>{
   @JsonKey(defaultValue: 0)
   final num full;

@@ -1,7 +1,7 @@
 
 part of 'models.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: true)
 class LocationResponse extends BaseResponse<Location>{
   final String? area;
   final String? block;

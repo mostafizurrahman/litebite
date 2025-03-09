@@ -7,6 +7,10 @@ class Connection {
   Connection({required this.userID, required this.status});
 }
 
+class BaseEntity {
+
+}
+
 class Epicure {
   final List<Connection> connections;
   final String coverImage;

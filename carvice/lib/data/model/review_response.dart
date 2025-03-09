@@ -3,7 +3,7 @@
 part of 'models.dart';
 
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: true)
 class ReviewResponse extends BaseResponse<Review> {
   final num index;
   @JsonKey(name:'menu_id')

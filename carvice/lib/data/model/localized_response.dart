@@ -3,7 +3,7 @@
 
 part of 'models.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: true)
 class LocalizedResponse extends BaseResponse<LocalizedText> {
   final String? en;
   final String? bn;

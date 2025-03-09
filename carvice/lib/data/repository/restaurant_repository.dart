@@ -29,5 +29,20 @@ with ErrorRepositoryMixin
     final entity = toEntity(data!);
     return Left(entity);
   }
+/*
+FirebaseFirestore.instance
+    .collection('users')
+    .doc(userId)
+    .collection('orders')
+    .orderBy('created_at', descending: true)
+    .get();
+
+ */
+  @override
+  Future<Either<BaseEntity, ErrorEntity>> placeOrder(RestaurantOrder order) async {
+    // TODO: implement placeOrder
+    throw UnimplementedError();
+  }
+
 
 }

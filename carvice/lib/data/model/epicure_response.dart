@@ -1,6 +1,6 @@
 part of 'models.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: true)
 class ConnectionResponse extends BaseResponse<Connection> {
   final int state;
 
@@ -16,7 +16,7 @@ class ConnectionResponse extends BaseResponse<Connection> {
   Connection toEntity() => Connection(userID: userID, status: state);
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable(createToJson: true)
 class EpicureResponse extends BaseResponse<Epicure> {
   final List<ConnectionResponse> connections;
   @JsonKey(name: 'cover_image', defaultValue: '')

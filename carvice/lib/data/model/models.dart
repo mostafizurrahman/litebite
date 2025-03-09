@@ -19,8 +19,11 @@ part 'restaurant_response.dart';
 part 'review_response.dart';
 part 'location_response.dart';
 part 'table_response.dart';
-part 'order_response.dart';
-part 'restaurant_order.dart';
+part 'orders/restaurant_order.dart';
+// part 'orders/restaurant_order.dart';
+// part 'orders/restaurant_order.dart';
+// part 'orders/restaurant_order.dart';
+// part 'orders/restaurant_order.dart';
 part 'epicure_response.dart';
 
 //entity conversions

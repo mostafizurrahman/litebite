@@ -16,6 +16,16 @@ extension ListUtils<T> on List<T> {
 }
 
 extension MenuExt on Menu {
+  String getPriceName({required num price}) {
+    if (price == this.price.half) {
+      return 'Regular';
+    }
+    if (price == this.price.full) {
+      return 'Full';
+    }
+    return '3 Persons';
+  }
+
   num get totalPrice {
     return platterMap.entries
         .fold(0, (sum, entry) => sum + (entry.key * entry.value));
