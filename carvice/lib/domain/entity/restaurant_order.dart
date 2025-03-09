@@ -1,7 +1,17 @@
 
+enum OrderProcessStatus {
+  requested, // request from user to restaurant
+  confirmed, // confirmed by waiter to customer
+  receiptGenerated,
+}
 
+extension ExtOrderProcessStatus on OrderProcessStatus {
+  String get value {
+    return this.toString().split('.').last;
+  }
+}
 class RestaurantOrder {
-  final bool isProcessed;
+  final OrderProcessStatus processStatus;
   final List<String> menus;
   final String orderID;
   final DateTime orderTime;
@@ -12,7 +22,7 @@ class RestaurantOrder {
   final String customerNumber;
 
   RestaurantOrder({
-    required this.isProcessed,
+    required this.processStatus,
     required this.menus,
     required this.orderID,
     required this.orderTime,
@@ -22,4 +32,9 @@ class RestaurantOrder {
     required this.userID,
     required this.customerNumber,
   });
-}
+
+  Map<String, dynamic> toJsonMap() => {
+
+  };
+
+ }

@@ -144,8 +144,9 @@ class OrderInfoResponse extends BaseResponse<OrderInfo> {
 @JsonSerializable(createToJson: true)
 class RestaurantOrderResponse extends BaseResponse<RestaurantOrder> {
 
-  @JsonKey(name: 'is_processed')
-  final bool isProcessed;
+  @OrderStatusConverter()
+  @JsonKey(name: 'order_status')
+  final OrderProcessStatus orderStatus;
   final List<String> menus;
   @JsonKey(name: 'order_id')
   final String orderID;
@@ -165,7 +166,7 @@ class RestaurantOrderResponse extends BaseResponse<RestaurantOrder> {
   factory RestaurantOrderResponse.fromJson(Map<String, dynamic> json) => _$RestaurantOrderResponseFromJson(json);
 
   RestaurantOrderResponse({
-    required this.isProcessed,
+    required this.orderStatus,
     required this.menus,
     required this.orderID,
     required this.orderTime,
@@ -182,7 +183,7 @@ class RestaurantOrderResponse extends BaseResponse<RestaurantOrder> {
     waiters: waiters,
     orderTime: orderTime,
     orderID: orderID,
-    isProcessed: isProcessed,
+    processStatus: orderStatus,
     menus: menus,
     restaurantNumber: restaurantNumber,
     customerNumber: customerNumber,

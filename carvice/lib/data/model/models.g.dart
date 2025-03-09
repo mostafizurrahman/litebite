@@ -276,7 +276,8 @@ Map<String, dynamic> _$OrderInfoResponseToJson(OrderInfoResponse instance) =>
 RestaurantOrderResponse _$RestaurantOrderResponseFromJson(
         Map<String, dynamic> json) =>
     RestaurantOrderResponse(
-      isProcessed: json['is_processed'] as bool,
+      orderStatus:
+          const OrderStatusConverter().fromJson(json['order_status'] as String),
       menus: (json['menus'] as List<dynamic>).map((e) => e as String).toList(),
       orderID: json['order_id'] as String,
       orderTime:
@@ -293,7 +294,7 @@ RestaurantOrderResponse _$RestaurantOrderResponseFromJson(
 Map<String, dynamic> _$RestaurantOrderResponseToJson(
         RestaurantOrderResponse instance) =>
     <String, dynamic>{
-      'is_processed': instance.isProcessed,
+      'order_status': const OrderStatusConverter().toJson(instance.orderStatus),
       'menus': instance.menus,
       'order_id': instance.orderID,
       'order_time': const TimestampConverter().toJson(instance.orderTime),
