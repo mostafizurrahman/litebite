@@ -1,3 +1,4 @@
+import 'order_menu.dart';
 
 enum OrderProcessStatus {
   requested, // request from user to restaurant
@@ -10,31 +11,27 @@ extension ExtOrderProcessStatus on OrderProcessStatus {
     return this.toString().split('.').last;
   }
 }
+
 class RestaurantOrder {
-  final OrderProcessStatus processStatus;
-  final List<String> menus;
-  final String orderID;
   final DateTime orderTime;
   final List<String> tables;
   final List<String> waiters;
-  final String restaurantNumber;
-  final String userID;
+  final List<OrderMenu> menus;
+  final List<String> userList;
   final String customerNumber;
+  final String restaurantNumber;
+  final OrderProcessStatus processStatus;
 
   RestaurantOrder({
-    required this.processStatus,
     required this.menus,
-    required this.orderID,
-    required this.orderTime,
     required this.tables,
     required this.waiters,
-    required this.restaurantNumber,
-    required this.userID,
+    required this.userList,
+    required this.orderTime,
+    required this.processStatus,
     required this.customerNumber,
+    required this.restaurantNumber,
   });
 
-  Map<String, dynamic> toJsonMap() => {
-
-  };
-
- }
+  Map<String, dynamic> toJsonMap() => {};
+}

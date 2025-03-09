@@ -195,24 +195,49 @@ Map<String, dynamic> _$LocationResponseToJson(LocationResponse instance) =>
       'road': instance.road,
     };
 
+MenuSizeResponse _$MenuSizeResponseFromJson(Map<String, dynamic> json) =>
+    MenuSizeResponse(
+      full: json['full'] as num? ?? 0,
+      half: json['half'] as num? ?? 0,
+      oneToThree: json['one_to_three'] as num? ?? 0,
+    );
+
+Map<String, dynamic> _$MenuSizeResponseToJson(MenuSizeResponse instance) =>
+    <String, dynamic>{
+      'full': instance.full,
+      'half': instance.half,
+      'one_to_three': instance.oneToThree,
+    };
+
 OrderMenuResponse _$OrderMenuResponseFromJson(Map<String, dynamic> json) =>
     OrderMenuResponse(
       discount: json['discount'] as num? ?? 0,
-      quantity: json['quantity'] as num? ?? 1,
-      menuPrice: json['unit_price'] as num? ?? 0,
       menuID: json['menu_id'] as String,
-      time: const TimestampConverter().fromJson(json['time'] as Timestamp),
-      tableID: json['table'] as String,
+      time: const TimestampConverter().fromJson(json['menu_time'] as Timestamp),
+      tableID: json['table_id'] as String,
+      menuCookingStatus: json['menu_status'] == null
+          ? MenuCookingStatus.menuPending
+          : const MenuStatusConverter().fromJson(json['menu_status'] as String),
+      waiters:
+          (json['waiters'] as List<dynamic>).map((e) => e as String).toList(),
+      discountType: json['discount_type'] == null
+          ? DiscountType.noDiscount
+          : const DiscountConverter().fromJson(json['discount_type'] as String),
+      platterSize: MenuSizeResponse.fromJson(
+          json['platter_size'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$OrderMenuResponseToJson(OrderMenuResponse instance) =>
     <String, dynamic>{
       'discount': instance.discount,
-      'quantity': instance.quantity,
-      'unit_price': instance.menuPrice,
+      'discount_type': const DiscountConverter().toJson(instance.discountType),
+      'menu_status':
+          const MenuStatusConverter().toJson(instance.menuCookingStatus),
       'menu_id': instance.menuID,
-      'time': const TimestampConverter().toJson(instance.time),
-      'table': instance.tableID,
+      'menu_time': const TimestampConverter().toJson(instance.time),
+      'table_id': instance.tableID,
+      'platter_size': instance.platterSize,
+      'waiters': instance.waiters,
     };
 
 TableDataResponse _$TableDataResponseFromJson(Map<String, dynamic> json) =>
@@ -256,53 +281,38 @@ Map<String, dynamic> _$OrderResponseToJson(OrderResponse instance) =>
       'order_time': const TimestampConverter().toJson(instance.orderTime),
     };
 
-OrderInfoResponse _$OrderInfoResponseFromJson(Map<String, dynamic> json) =>
-    OrderInfoResponse(
-      orderImage: json['order_image'] as String,
-      managerID: json['manager_id'] as String,
-      orderList: (json['order_list'] as List<dynamic>?)
-              ?.map((e) => OrderResponse.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-    );
-
-Map<String, dynamic> _$OrderInfoResponseToJson(OrderInfoResponse instance) =>
-    <String, dynamic>{
-      'order_image': instance.orderImage,
-      'manager_id': instance.managerID,
-      'order_list': instance.orderList,
-    };
-
 RestaurantOrderResponse _$RestaurantOrderResponseFromJson(
         Map<String, dynamic> json) =>
     RestaurantOrderResponse(
-      orderStatus:
-          const OrderStatusConverter().fromJson(json['order_status'] as String),
-      menus: (json['menus'] as List<dynamic>).map((e) => e as String).toList(),
-      orderID: json['order_id'] as String,
-      orderTime:
-          const TimestampConverter().fromJson(json['order_time'] as Timestamp),
-      tables:
-          (json['tables'] as List<dynamic>).map((e) => e as String).toList(),
+      menus: (json['menu_list'] as List<dynamic>)
+          .map((e) => OrderMenuResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      tables: (json['table_list'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       waiters:
           (json['waiters'] as List<dynamic>).map((e) => e as String).toList(),
+      userList:
+          (json['user_list'] as List<dynamic>).map((e) => e as String).toList(),
+      orderTime:
+          const TimestampConverter().fromJson(json['order_time'] as Timestamp),
+      orderStatus:
+          const OrderStatusConverter().fromJson(json['order_status'] as String),
       customerNumber: json['customer_contact'] as String,
-      restaurantNumber: json['restaurant_contact'] as String,
-      userID: json['user_id'] as String,
+      restaurantNumber: json['order_contact'] as String,
     );
 
 Map<String, dynamic> _$RestaurantOrderResponseToJson(
         RestaurantOrderResponse instance) =>
     <String, dynamic>{
       'order_status': const OrderStatusConverter().toJson(instance.orderStatus),
-      'menus': instance.menus,
-      'order_id': instance.orderID,
+      'menu_list': instance.menus,
       'order_time': const TimestampConverter().toJson(instance.orderTime),
-      'tables': instance.tables,
+      'table_list': instance.tables,
       'waiters': instance.waiters,
       'customer_contact': instance.customerNumber,
-      'user_id': instance.userID,
-      'restaurant_contact': instance.restaurantNumber,
+      'user_list': instance.userList,
+      'order_contact': instance.restaurantNumber,
     };
 
 ConnectionResponse _$ConnectionResponseFromJson(Map<String, dynamic> json) =>

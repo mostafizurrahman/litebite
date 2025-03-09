@@ -1,6 +1,11 @@
 import '../../ui/home/restaurant/details/details_constant.dart';
 import '../domain.dart';
-
+enum MenuCookingStatus {
+  menuAccepted,
+  menuProgress,
+  menuCanceled,
+  menuPending,
+}
 enum DiscountType {
   percent,
   cashReduce,

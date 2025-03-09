@@ -15,6 +15,21 @@ class DiscountConverter implements JsonConverter<DiscountType, String> {
   String toJson(DiscountType object) => object.toString().split('.').last;
 }
 
+class MenuStatusConverter implements JsonConverter<MenuCookingStatus, String> {
+  const MenuStatusConverter();
+
+  @override
+  MenuCookingStatus fromJson(String json) {
+    return MenuCookingStatus.values.firstWhere(
+      (e) => e.toString().split('.').last == json,
+      orElse: () => MenuCookingStatus.menuPending,
+    );
+  }
+
+  @override
+  String toJson(MenuCookingStatus object) => object.toString().split('.').last;
+}
+
 @JsonSerializable(createToJson: true)
 class MenuResponse extends BaseResponse<Menu> {
   @JsonKey(defaultValue: 0)

@@ -1,41 +1,76 @@
-
-
 part of '../models.dart';
+
+@JsonSerializable(createToJson: true)
+class MenuSizeResponse extends BaseResponse<MenuSize> {
+  @JsonKey(name: 'full', defaultValue: 0)
+  final num full;
+  @JsonKey(name: 'half', defaultValue: 0)
+  final num half;
+  @JsonKey(name: 'one_to_three', defaultValue: 0)
+  final num oneToThree;
+
+  MenuSizeResponse({
+    required this.full,
+    required this.half,
+    required this.oneToThree,
+  });
+
+  @override
+  MenuSize toEntity() => MenuSize(
+        full: full,
+        half: half,
+        oneToThree: oneToThree,
+      );
+  factory MenuSizeResponse.fromJson(Map<String, dynamic> json) =>
+      _$MenuSizeResponseFromJson(json);
+}
 
 @JsonSerializable(createToJson: true)
 class OrderMenuResponse extends BaseResponse<OrderMenu> {
   @JsonKey(defaultValue: 0)
   final num discount;
-  @JsonKey(defaultValue: 1)
-  final num quantity;
-  @JsonKey(name: 'unit_price', defaultValue: 0)
-  final num menuPrice;
+  @DiscountConverter()
+  @JsonKey(name: 'discount_type', defaultValue: DiscountType.noDiscount)
+  final DiscountType discountType;
+
+  @MenuStatusConverter()
+  @JsonKey(name: 'menu_status', defaultValue: MenuCookingStatus.menuPending)
+  final MenuCookingStatus menuCookingStatus;
+
   @JsonKey(name: 'menu_id')
   final String menuID;
   @TimestampConverter()
+  @JsonKey(name: 'menu_time')
   final DateTime time;
-  @JsonKey(name: 'table')
+  @JsonKey(name: 'table_id')
   final String tableID;
+  @JsonKey(name: 'platter_size')
+  final MenuSizeResponse platterSize;
+  final List<String> waiters;
 
   @override
   OrderMenu toEntity() {
     return OrderMenu(
       menuID: menuID,
-      quantity: quantity,
-      menuPrice: menuPrice,
       discount: discount,
       time: time,
       tableID: tableID,
+      discountType: discountType,
+      waiters: waiters,
+      cookingStatus: menuCookingStatus,
+      menuSize: _toEntity(platterSize),
     );
   }
 
   OrderMenuResponse({
     required this.discount,
-    required this.quantity,
-    required this.menuPrice,
     required this.menuID,
     required this.time,
     required this.tableID,
+    required this.menuCookingStatus,
+    required this.waiters,
+    required this.discountType,
+    required this.platterSize,
   });
 
   factory OrderMenuResponse.fromJson(Map<String, dynamic> json) =>
@@ -59,10 +94,10 @@ class TableDataResponse extends BaseResponse<TableData> {
 
   @override
   TableData toEntity() => TableData(
-    tableID: tableID,
-    tableNo: tableNo,
-    waiterID: waiterID,
-  );
+        tableID: tableID,
+        tableNo: tableNo,
+        waiterID: waiterID,
+      );
 
   factory TableDataResponse.fromJson(Map<String, dynamic> json) =>
       _$TableDataResponseFromJson(json);
@@ -114,79 +149,49 @@ class OrderResponse extends BaseResponse<FoodOrder> {
 }
 
 @JsonSerializable(createToJson: true)
-class OrderInfoResponse extends BaseResponse<OrderInfo> {
-  @JsonKey(name: 'order_image')
-  final String orderImage;
-  @JsonKey(name: 'manager_id')
-  final String managerID;
-  @JsonKey(name: 'order_list', defaultValue: [])
-  final List<OrderResponse> orderList;
-
-  @override
-  OrderInfo toEntity() {
-    return OrderInfo(
-      managerID: this.managerID,
-      orderImage: this.orderImage,
-      orderList: _toEntityList(orderList),
-    );
-  }
-
-  OrderInfoResponse({
-    required this.orderImage,
-    required this.managerID,
-    required this.orderList,
-  });
-
-  factory OrderInfoResponse.fromJson(Map<String, dynamic> json) =>
-      _$OrderInfoResponseFromJson(json);
-}
-
-@JsonSerializable(createToJson: true)
 class RestaurantOrderResponse extends BaseResponse<RestaurantOrder> {
-
   @OrderStatusConverter()
   @JsonKey(name: 'order_status')
   final OrderProcessStatus orderStatus;
-  final List<String> menus;
-  @JsonKey(name: 'order_id')
-  final String orderID;
+  @JsonKey(name: 'menu_list')
+  final List<OrderMenuResponse> menus;
   @TimestampConverter()
   @JsonKey(name: 'order_time')
   final DateTime orderTime;
+  @JsonKey(name: 'table_list')
   final List<String> tables;
+
   final List<String> waiters;
   @JsonKey(name: 'customer_contact')
   final String customerNumber;
-  @JsonKey(name: 'user_id')
-  final String userID;
-  @JsonKey(name: 'restaurant_contact')
+  @JsonKey(name: 'user_list') // multiple user may add menu same order-id
+  final List<String> userList;
+  @JsonKey(name: 'order_contact')
   final String restaurantNumber;
 
-
-  factory RestaurantOrderResponse.fromJson(Map<String, dynamic> json) => _$RestaurantOrderResponseFromJson(json);
+  factory RestaurantOrderResponse.fromJson(Map<String, dynamic> json) =>
+      _$RestaurantOrderResponseFromJson(json);
 
   RestaurantOrderResponse({
-    required this.orderStatus,
     required this.menus,
-    required this.orderID,
-    required this.orderTime,
     required this.tables,
     required this.waiters,
+    required this.userList,
+    required this.orderTime,
+    required this.orderStatus,
     required this.customerNumber,
     required this.restaurantNumber,
-    required this.userID
   });
 
   @override
   RestaurantOrder toEntity() => RestaurantOrder(
-    tables: tables,
-    waiters: waiters,
-    orderTime: orderTime,
-    orderID: orderID,
-    processStatus: orderStatus,
-    menus: menus,
-    restaurantNumber: restaurantNumber,
-    customerNumber: customerNumber,
-    userID: userID,
-  );
+        tables: tables,
+        waiters: waiters,
+        userList: userList,
+        orderTime: orderTime,
+        processStatus: orderStatus,
+        menus: _toEntityList(menus),
+        customerNumber: customerNumber,
+        restaurantNumber: restaurantNumber,
+      );
 }

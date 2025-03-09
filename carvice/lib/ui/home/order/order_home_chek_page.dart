@@ -50,7 +50,7 @@ class _OrderHomeCheckPageState extends State<OrderHomeCheckPage> {
               child: _buildMenuItem(menu));
         },
       ),
-      bottomNavigationBar: StreamBuilder(stream: stream, builder: builder),
+      // bottomNavigationBar: StreamBuilder(stream: stream, builder: builder),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
         label:
